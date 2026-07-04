@@ -23,14 +23,14 @@ export default function ExpertProfileScreen() {
 
   if (!expert) {
     return (
-      <View className="flex-1 items-center justify-center bg-[#F5F8FC]">
+      <View className="flex-1 items-center justify-center bg-[#F5F8FC] dark:bg-[#1b2226]">
         <Text className="text-[#64748B]">Эксперт не найден</Text>
       </View>
     );
   }
 
   return (
-    <View className="flex-1 bg-[#F5F8FC]">
+    <View className="flex-1 bg-[#F5F8FC] dark:bg-[#1b2226]">
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 24 }}>
         <View className="bg-[#0D233B] px-5 pb-6 pt-6">
           <View className="flex-row items-center gap-4">
@@ -50,16 +50,16 @@ export default function ExpertProfileScreen() {
 
         <View className="px-5">
           <SectionTitle>О специалисте</SectionTitle>
-          <Text className="text-[15px] leading-[22px] text-[#0D233B]">{expert.bio}</Text>
+          <Text className="text-[15px] leading-[22px] text-[#0D233B] dark:text-gray-200">{expert.bio}</Text>
 
           <SectionTitle>Компетенции</SectionTitle>
           <View className="gap-[10px]">
             {expert.comp.map((c) => (
               <View key={c} className="flex-row items-start gap-[10px]">
-                <View className="mt-[1px] h-[18px] w-[18px] items-center justify-center rounded-full bg-[#E8F0FE]">
+                <View className="mt-[1px] h-[18px] w-[18px] items-center justify-center rounded-full bg-[#E8F0FE] dark:bg-[#0D233B]">
                   <Feather name="check" size={11} color="#2563EB" />
                 </View>
-                <Text className="flex-1 text-[14px] text-[#0D233B]">{c}</Text>
+                <Text className="flex-1 text-[14px] text-[#0D233B] dark:text-gray-200">{c}</Text>
               </View>
             ))}
           </View>
@@ -67,48 +67,51 @@ export default function ExpertProfileScreen() {
           <SectionTitle>Темы консультаций</SectionTitle>
           <View className="flex-row flex-wrap gap-[8px]">
             {expert.topicsFull.map((t) => (
-              <View key={t} className="rounded-full bg-[#E8F0FE] px-[11px] py-[5px]">
-                <Text className="text-[12px] font-medium text-[#1D4ED8]">{t}</Text>
+              <View key={t} className="rounded-full bg-[#E8F0FE] px-[11px] py-[5px] dark:bg-[#0D233B]">
+                <Text className="text-[12px] font-medium text-[#1D4ED8] dark:text-[#93B4FF]">{t}</Text>
               </View>
             ))}
           </View>
 
           <SectionTitle>Опыт</SectionTitle>
           {expert.exp.map((x) => (
-            <View key={x.rw} className="mb-4 border-l-2 border-[#E8F0FE] pl-4">
-              <Text className="text-[11px] tracking-[0.5px] text-[#1D4ED8]">{x.yr}</Text>
-              <Text className="mt-[2px] text-[14px] font-bold text-[#0D233B]">{x.rw}</Text>
-              <Text className="mt-[2px] text-[13px] text-[#64748B]">{x.ds}</Text>
+            <View key={x.rw} className="mb-4 border-l-2 border-[#E8F0FE] pl-4 dark:border-[#0D233B]">
+              <Text className="text-[11px] tracking-[0.5px] text-[#1D4ED8] dark:text-[#93B4FF]">{x.yr}</Text>
+              <Text className="mt-[2px] text-[14px] font-bold text-[#0D233B] dark:text-white">{x.rw}</Text>
+              <Text className="mt-[2px] text-[13px] text-[#64748B] dark:text-gray-400">{x.ds}</Text>
             </View>
           ))}
 
           <SectionTitle>Форматы и стоимость</SectionTitle>
           <View className="gap-[10px]">
             {expert.formats.map((f) => (
-              <View key={f.fn} className="flex-row items-center justify-between rounded-xl border border-gray-100 bg-white px-[16px] py-[14px]">
+              <View key={f.fn} className="flex-row items-center justify-between rounded-xl border border-gray-100 bg-white px-[16px] py-[14px] dark:border-[#3a444a] dark:bg-[#2c353a]">
                 <View className="flex-1 pr-2">
-                  <Text className="text-[14px] font-semibold text-[#0D233B]">{f.fn}</Text>
-                  <Text className="mt-[2px] text-[12px] text-[#64748B]">{f.fd}</Text>
+                  <Text className="text-[14px] font-semibold text-[#0D233B] dark:text-white">{f.fn}</Text>
+                  <Text className="mt-[2px] text-[12px] text-[#64748B] dark:text-gray-400">{f.fd}</Text>
                 </View>
-                <Text className="text-[16px] font-bold text-[#0D233B]">{f.fp}</Text>
+                <Text className="text-[16px] font-bold text-[#0D233B] dark:text-white">{f.fp}</Text>
               </View>
             ))}
           </View>
         </View>
       </ScrollView>
 
-      <View style={{ paddingBottom: insets.bottom + 12 }} className="border-t border-gray-100 bg-white px-5 pt-4">
+      <View
+        style={{ paddingBottom: insets.bottom + 12 }}
+        className="border-t border-gray-100 bg-white px-5 pt-4 dark:border-[#3a444a] dark:bg-[#2c353a]"
+      >
         {!revealed ? (
           <Pressable onPress={() => setRevealed(true)} className="items-center rounded-2xl bg-[#2563EB] py-[15px] active:opacity-90">
             <Text className="text-[15px] font-semibold text-white">Получить контакты специалиста</Text>
           </Pressable>
         ) : (
-          <View className="flex-row items-center gap-2 rounded-2xl border border-[#2563EB] bg-[#E8F0FE] px-4 py-[14px]">
+          <View className="flex-row items-center gap-2 rounded-2xl border border-[#2563EB] bg-[#E8F0FE] px-4 py-[14px] dark:bg-[#0D233B]">
             <Feather name="phone" size={16} color="#1D4ED8" />
-            <Text className="flex-1 text-[14px] font-semibold text-[#1D4ED8]">{expert.contact}</Text>
+            <Text className="flex-1 text-[14px] font-semibold text-[#1D4ED8] dark:text-[#93B4FF]">{expert.contact}</Text>
           </View>
         )}
-        <Text className="mt-[10px] text-center text-[12px] text-[#64748B]">
+        <Text className="mt-[10px] text-center text-[12px] text-[#64748B] dark:text-gray-400">
           Специалист получит уведомление и зафиксирует консультацию
         </Text>
       </View>

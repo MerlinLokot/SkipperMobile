@@ -6,7 +6,17 @@
     "orientation": "portrait",
     "scheme": "profifinder",
     "userInterfaceStyle": "automatic",
-    "android": { "package": "com.profifinder.app" },
-    "plugins": ["expo-router"]
+    "android": {
+      "package": "com.profifinder.app"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "278333aa-846c-4cb1-968b-0807ae1db3d8"
+      }
+    }
   }
 }
