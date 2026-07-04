@@ -1,0 +1,2298 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.gitignore
+android/.gitignore
+android/app/build.gradle
+android/app/debug.keystore
+android/app/proguard-rules.pro
+android/app/src/debug/AndroidManifest.xml
+android/app/src/debugOptimized/AndroidManifest.xml
+android/app/src/main/AndroidManifest.xml
+android/app/src/main/java/com/profifinder/app/MainActivity.kt
+android/app/src/main/java/com/profifinder/app/MainApplication.kt
+android/app/src/main/res/drawable-hdpi/splashscreen_logo.png
+android/app/src/main/res/drawable-mdpi/splashscreen_logo.png
+android/app/src/main/res/drawable-xhdpi/splashscreen_logo.png
+android/app/src/main/res/drawable-xxhdpi/splashscreen_logo.png
+android/app/src/main/res/drawable-xxxhdpi/splashscreen_logo.png
+android/app/src/main/res/drawable/ic_launcher_background.xml
+android/app/src/main/res/drawable/rn_edit_text_material.xml
+android/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp
+android/app/src/main/res/mipmap-hdpi/ic_launcher.webp
+android/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp
+android/app/src/main/res/mipmap-mdpi/ic_launcher.webp
+android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp
+android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp
+android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp
+android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp
+android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp
+android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp
+android/app/src/main/res/values/colors.xml
+android/app/src/main/res/values/strings.xml
+android/app/src/main/res/values/styles.xml
+android/build.gradle
+android/gradle.properties
+android/gradle/wrapper/gradle-wrapper.jar
+android/gradle/wrapper/gradle-wrapper.properties
+android/gradlew
+android/gradlew.bat
+android/settings.gradle
+app.json
+assets/images/android-icon-background.png
+assets/images/android-icon-foreground.png
+assets/images/android-icon-monochrome.png
+assets/images/favicon.png
+assets/images/icon.png
+assets/images/partial-react-logo.png
+assets/images/react-logo.png
+assets/images/react-logo@2x.png
+assets/images/react-logo@3x.png
+assets/images/splash-icon.png
+babel.config.js
+eas.json
+eslint.config.js
+jsconfig.json
+metro.config.js
+package.json
+scripts/reset-project.js
+src/app/_layout.jsx
+src/app/(tabs)/_layout.jsx
+src/app/(tabs)/become.jsx
+src/app/(tabs)/catalog.jsx
+src/app/(tabs)/index.jsx
+src/app/expert/[id].jsx
+src/components/Chip.jsx
+src/components/ExpertCard.jsx
+src/components/Logo.jsx
+src/data/catalog.js
+src/global.css
+tailwind.config.js
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="android/.gitignore">
+# OSX
+#
+.DS_Store
+
+# Android/IntelliJ
+#
+build/
+.idea
+.gradle
+local.properties
+*.iml
+*.hprof
+.cxx/
+
+# generated inline modules
+app/src/main/java/inline/
+
+# Bundle artifacts
+*.jsbundle
+</file>
+
+<file path="android/app/build.gradle">
+apply plugin: "com.android.application"
+apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "com.facebook.react"
+
+def projectRoot = rootDir.getAbsoluteFile().getParentFile().getAbsolutePath()
+
+/**
+ * This is the configuration block to customize your React Native Android app.
+ * By default you don't need to apply any configuration, just uncomment the lines you need.
+ */
+react {
+    entryFile = file(["node", "-e", "require('expo/scripts/resolveAppEntry')", projectRoot, "android", "absolute"].execute(null, rootDir).text.trim())
+    reactNativeDir = new File(["node", "--print", "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim()).getParentFile().getAbsoluteFile()
+    hermesCommand = new File(["node", "--print", "require.resolve('hermes-compiler/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim()).getParentFile().getAbsolutePath() + "/hermesc/%OS-BIN%/hermesc"
+    codegenDir = new File(["node", "--print", "require.resolve('@react-native/codegen/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim()).getParentFile().getAbsoluteFile()
+
+    enableBundleCompression = (findProperty('android.enableBundleCompression') ?: false).toBoolean()
+    // Use Expo CLI to bundle the app, this ensures the Metro config
+    // works correctly with Expo projects.
+    cliFile = new File(["node", "--print", "require.resolve('@expo/cli', { paths: [require.resolve('expo/package.json')] })"].execute(null, rootDir).text.trim())
+    bundleCommand = "export:embed"
+
+    /* Folders */
+     //   The root of your project, i.e. where "package.json" lives. Default is '../..'
+    // root = file("../../")
+    //   The folder where the react-native NPM package is. Default is ../../node_modules/react-native
+    // reactNativeDir = file("../../node_modules/react-native")
+    //   The folder where the react-native Codegen package is. Default is ../../node_modules/@react-native/codegen
+    // codegenDir = file("../../node_modules/@react-native/codegen")
+
+    /* Variants */
+    //   The list of variants to that are debuggable. For those we're going to
+    //   skip the bundling of the JS bundle and the assets. By default is just 'debug'.
+    //   If you add flavors like lite, prod, etc. you'll have to list your debuggableVariants.
+    // debuggableVariants = ["liteDebug", "prodDebug"]
+
+    /* Bundling */
+    //   A list containing the node command and its flags. Default is just 'node'.
+    // nodeExecutableAndArgs = ["node"]
+
+    //
+    //   The path to the CLI configuration file. Default is empty.
+    // bundleConfig = file(../rn-cli.config.js)
+    //
+    //   The name of the generated asset file containing your JS bundle
+    // bundleAssetName = "MyApplication.android.bundle"
+    //
+    //   The entry file for bundle generation. Default is 'index.android.js' or 'index.js'
+    // entryFile = file("../js/MyApplication.android.js")
+    //
+    //   A list of extra flags to pass to the 'bundle' commands.
+    //   See https://github.com/react-native-community/cli/blob/main/docs/commands.md#bundle
+    // extraPackagerArgs = []
+
+    /* Hermes Commands */
+    //   The hermes compiler command to run. By default it is 'hermesc'
+    // hermesCommand = "$rootDir/my-custom-hermesc/bin/hermesc"
+    //
+    //   The list of flags to pass to the Hermes compiler. By default is "-O", "-output-source-map"
+    // hermesFlags = ["-O", "-output-source-map"]
+
+    /* Autolinking */
+    autolinkLibrariesWithApp()
+}
+
+/**
+ * Set this to true in release builds to optimize the app using [R8](https://developer.android.com/topic/performance/app-optimization/enable-app-optimization).
+ */
+def enableMinifyInReleaseBuilds = (findProperty('android.enableMinifyInReleaseBuilds') ?: false).toBoolean()
+
+/**
+ * The preferred build flavor of JavaScriptCore (JSC)
+ *
+ * For example, to use the international variant, you can use:
+ * `def jscFlavor = 'org.webkit:android-jsc-intl:+'`
+ *
+ * The international variant includes ICU i18n library and necessary data
+ * allowing to use e.g. `Date.toLocaleString` and `String.localeCompare` that
+ * give correct results when using with locales other than en-US. Note that
+ * this variant is about 6MiB larger per architecture than default.
+ */
+def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
+
+android {
+    ndkVersion rootProject.ext.ndkVersion
+
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk rootProject.ext.compileSdkVersion
+
+    namespace 'com.profifinder.app'
+    defaultConfig {
+        applicationId 'com.profifinder.app'
+        minSdkVersion 24
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0.0"
+
+        buildConfigField "String", "REACT_NATIVE_RELEASE_LEVEL", "\"${findProperty('reactNativeReleaseLevel') ?: 'stable'}\""
+    }
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            // Caution! In production, you need to generate your own keystore file.
+            // see https://reactnative.dev/docs/signed-apk-android.
+            signingConfig signingConfigs.debug
+            def enableShrinkResources = findProperty('android.enableShrinkResourcesInReleaseBuilds') ?: 'false'
+            shrinkResources enableShrinkResources.toBoolean()
+            minifyEnabled enableMinifyInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            def enablePngCrunchInRelease = findProperty('android.enablePngCrunchInReleaseBuilds') ?: 'true'
+            crunchPngs enablePngCrunchInRelease.toBoolean()
+        }
+    }
+    packagingOptions {
+        jniLibs {
+            def enableLegacyPackaging = findProperty('expo.useLegacyPackaging') ?: 'false'
+            useLegacyPackaging enableLegacyPackaging.toBoolean()
+        }
+    }
+    androidResources {
+        ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:!CVS:!thumbs.db:!picasa.ini:!*~'
+    }
+}
+
+// Apply static values from `gradle.properties` to the `android.packagingOptions`
+// Accepts values in comma delimited lists, example:
+// android.packagingOptions.pickFirsts=/LICENSE,**/picasa.ini
+["pickFirsts", "excludes", "merges", "doNotStrip"].each { prop ->
+    // Split option: 'foo,bar' -> ['foo', 'bar']
+    def options = (findProperty("android.packagingOptions.$prop") ?: "").split(",");
+    // Trim all elements in place.
+    for (i in 0..<options.size()) options[i] = options[i].trim();
+    // `[] - ""` is essentially `[""].filter(Boolean)` removing all empty strings.
+    options -= ""
+
+    if (options.length > 0) {
+        println "android.packagingOptions.$prop += $options ($options.length)"
+        // Ex: android.packagingOptions.pickFirsts += '**/SCCS/**'
+        options.each {
+            android.packagingOptions[prop] += it
+        }
+    }
+}
+
+dependencies {
+    // The version of react-native is set by the React Native Gradle Plugin
+    implementation("com.facebook.react:react-android")
+
+    def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
+    def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
+    def isWebpAnimatedEnabled = (findProperty('expo.webp.animated') ?: "") == "true";
+
+    if (isGifEnabled) {
+        // For animated gif support
+        implementation("com.facebook.fresco:animated-gif:${expoLibs.versions.fresco.get()}")
+    }
+
+    if (isWebpEnabled) {
+        // For webp support
+        implementation("com.facebook.fresco:webpsupport:${expoLibs.versions.fresco.get()}")
+        if (isWebpAnimatedEnabled) {
+            // Animated webp support
+            implementation("com.facebook.fresco:animated-webp:${expoLibs.versions.fresco.get()}")
+        }
+    }
+
+    if (hermesEnabled.toBoolean()) {
+        implementation("com.facebook.react:hermes-android")
+    } else {
+        implementation jscFlavor
+    }
+}
+</file>
+
+<file path="android/app/proguard-rules.pro">
+# Add project specific ProGuard rules here.
+# By default, the flags in this file are appended to flags specified
+# in /usr/local/Cellar/android-sdk/24.3.3/tools/proguard/proguard-android.txt
+# You can edit the include path and order by changing the proguardFiles
+# directive in build.gradle.
+#
+# For more details, see
+#   http://developer.android.com/guide/developing/tools/proguard.html
+
+# react-native-reanimated
+-keep class com.swmansion.reanimated.** { *; }
+-keep class com.facebook.react.turbomodule.** { *; }
+
+# Add any project specific keep options here:
+</file>
+
+<file path="android/app/src/debug/AndroidManifest.xml">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+    <application android:usesCleartextTraffic="true" tools:targetApi="28" tools:ignore="GoogleAppIndexingWarning" tools:replace="android:usesCleartextTraffic" />
+</manifest>
+</file>
+
+<file path="android/app/src/debugOptimized/AndroidManifest.xml">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+    <application android:usesCleartextTraffic="true" tools:targetApi="28" tools:ignore="GoogleAppIndexingWarning" tools:replace="android:usesCleartextTraffic" />
+</manifest>
+</file>
+
+<file path="android/app/src/main/AndroidManifest.xml">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" tools:replace="android:maxSdkVersion"/>
+  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+  <uses-permission android:name="android.permission.VIBRATE"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" tools:replace="android:maxSdkVersion"/>
+  <queries>
+    <intent>
+      <action android:name="android.intent.action.VIEW"/>
+      <category android:name="android.intent.category.BROWSABLE"/>
+      <data android:scheme="https"/>
+    </intent>
+  </queries>
+  <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="true" android:theme="@style/AppTheme" android:supportsRtl="true" android:enableOnBackInvokedCallback="false">
+    <meta-data android:name="expo.modules.updates.ENABLED" android:value="false"/>
+    <meta-data android:name="expo.modules.updates.ENABLE_BSDIFF_PATCH_SUPPORT" android:value="true"/>
+    <meta-data android:name="expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH" android:value="ALWAYS"/>
+    <meta-data android:name="expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS" android:value="0"/>
+    <activity android:name=".MainActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|uiMode|smallestScreenSize" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.App.SplashScreen" android:exported="true" android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="profifinder"/>
+      </intent-filter>
+    </activity>
+  </application>
+</manifest>
+</file>
+
+<file path="android/app/src/main/java/com/profifinder/app/MainActivity.kt">
+package com.profifinder.app
+
+import android.os.Build
+import android.os.Bundle
+
+import com.facebook.react.ReactActivity
+import com.facebook.react.ReactActivityDelegate
+import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
+import com.facebook.react.defaults.DefaultReactActivityDelegate
+
+import expo.modules.ReactActivityDelegateWrapper
+
+class MainActivity : ReactActivity() {
+  override fun onCreate(savedInstanceState: Bundle?) {
+    // Set the theme to AppTheme BEFORE onCreate to support
+    // coloring the background, status bar, and navigation bar.
+    // This is required for expo-splash-screen.
+    setTheme(R.style.AppTheme);
+    super.onCreate(null)
+  }
+
+  /**
+   * Returns the name of the main component registered from JavaScript. This is used to schedule
+   * rendering of the component.
+   */
+  override fun getMainComponentName(): String = "main"
+
+  /**
+   * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]
+   * which allows you to enable New Architecture with a single boolean flags [fabricEnabled]
+   */
+  override fun createReactActivityDelegate(): ReactActivityDelegate {
+    return ReactActivityDelegateWrapper(
+          this,
+          BuildConfig.IS_NEW_ARCHITECTURE_ENABLED,
+          object : DefaultReactActivityDelegate(
+              this,
+              mainComponentName,
+              fabricEnabled
+          ){})
+  }
+
+  /**
+    * Align the back button behavior with Android S
+    * where moving root activities to background instead of finishing activities.
+    * @see <a href="https://developer.android.com/reference/android/app/Activity#onBackPressed()">onBackPressed</a>
+    */
+  override fun invokeDefaultOnBackPressed() {
+      if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.R) {
+          if (!moveTaskToBack(false)) {
+              // For non-root activities, use the default implementation to finish them.
+              super.invokeDefaultOnBackPressed()
+          }
+          return
+      }
+
+      // Use the default back button implementation on Android S
+      // because it's doing more than [Activity.moveTaskToBack] in fact.
+      super.invokeDefaultOnBackPressed()
+  }
+}
+</file>
+
+<file path="android/app/src/main/java/com/profifinder/app/MainApplication.kt">
+package com.profifinder.app
+
+import android.app.Application
+import android.content.res.Configuration
+
+import com.facebook.react.PackageList
+import com.facebook.react.ReactApplication
+import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
+import com.facebook.react.ReactPackage
+import com.facebook.react.ReactHost
+import com.facebook.react.common.ReleaseLevel
+import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint
+
+import expo.modules.ApplicationLifecycleDispatcher
+import expo.modules.ExpoReactHostFactory
+
+class MainApplication : Application(), ReactApplication {
+
+  override val reactHost: ReactHost by lazy {
+    ExpoReactHostFactory.getDefaultReactHost(
+      context = applicationContext,
+      packageList =
+        PackageList(this).packages.apply {
+          // Packages that cannot be autolinked yet can be added manually here, for example:
+          // add(MyReactNativePackage())
+        }
+    )
+  }
+
+  override fun onCreate() {
+    super.onCreate()
+    DefaultNewArchitectureEntryPoint.releaseLevel = try {
+      ReleaseLevel.valueOf(BuildConfig.REACT_NATIVE_RELEASE_LEVEL.uppercase())
+    } catch (e: IllegalArgumentException) {
+      ReleaseLevel.STABLE
+    }
+    loadReactNative(this)
+    ApplicationLifecycleDispatcher.onApplicationCreate(this)
+  }
+
+  override fun onConfigurationChanged(newConfig: Configuration) {
+    super.onConfigurationChanged(newConfig)
+    ApplicationLifecycleDispatcher.onConfigurationChanged(this, newConfig)
+  }
+}
+</file>
+
+<file path="android/app/src/main/res/drawable/ic_launcher_background.xml">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:drawable="@color/splashscreen_background"/>
+  <item>
+    <bitmap android:gravity="center" android:src="@drawable/splashscreen_logo"/>
+  </item>
+</layer-list>
+</file>
+
+<file path="android/app/src/main/res/drawable/rn_edit_text_material.xml">
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2014 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+       android:insetLeft="@dimen/abc_edit_text_inset_horizontal_material"
+       android:insetRight="@dimen/abc_edit_text_inset_horizontal_material"
+       android:insetTop="@dimen/abc_edit_text_inset_top_material"
+       android:insetBottom="@dimen/abc_edit_text_inset_bottom_material"
+       >
+
+    <selector>
+        <!--
+          This file is a copy of abc_edit_text_material (https://bit.ly/3k8fX7I).
+          The item below with state_pressed="false" and state_focused="false" causes a NullPointerException.
+          NullPointerException:tempt to invoke virtual method 'android.graphics.drawable.Drawable android.graphics.drawable.Drawable$ConstantState.newDrawable(android.content.res.Resources)'
+
+          <item android:state_pressed="false" android:state_focused="false" android:drawable="@drawable/abc_textfield_default_mtrl_alpha"/>
+
+          For more info, see https://bit.ly/3CdLStv (react-native/pull/29452) and https://bit.ly/3nxOMoR.
+        -->
+        <item android:state_enabled="false" android:drawable="@drawable/abc_textfield_default_mtrl_alpha"/>
+        <item android:drawable="@drawable/abc_textfield_activated_mtrl_alpha"/>
+    </selector>
+
+</inset>
+</file>
+
+<file path="android/app/src/main/res/values/colors.xml">
+<resources>
+  <color name="splashscreen_background">#FFFFFF</color>
+  <color name="colorPrimary">#023c69</color>
+</resources>
+</file>
+
+<file path="android/app/src/main/res/values/strings.xml">
+<resources>
+  <string name="app_name">ProfiFinder</string>
+</resources>
+</file>
+
+<file path="android/app/src/main/res/values/styles.xml">
+<resources xmlns:tools="http://schemas.android.com/tools">
+  <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+    <item name="android:navigationBarColor">@android:color/transparent</item>
+  </style>
+  <style name="Theme.App.SplashScreen" parent="AppTheme">
+    <item name="android:windowBackground">@drawable/splashscreen_logo</item>
+  </style>
+</resources>
+</file>
+
+<file path="android/build.gradle">
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
+    classpath('com.android.tools.build:gradle')
+    classpath('com.facebook.react:react-native-gradle-plugin')
+    classpath('org.jetbrains.kotlin:kotlin-gradle-plugin')
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://www.jitpack.io' }
+  }
+}
+
+apply plugin: "expo-root-project"
+apply plugin: "com.facebook.react.rootproject"
+</file>
+
+<file path="android/gradle.properties">
+# Project-wide Gradle settings.
+
+# IDE (e.g. Android Studio) users:
+# Gradle settings configured through the IDE *will override*
+# any settings specified in this file.
+
+# For more details on how to configure your build environment visit
+# http://www.gradle.org/docs/current/userguide/build_environment.html
+
+# Specifies the JVM arguments used for the daemon process.
+# The setting is particularly useful for tweaking memory settings.
+# Default value: -Xmx512m -XX:MaxMetaspaceSize=256m
+org.gradle.jvmargs=-Xmx2048m -XX:MaxMetaspaceSize=512m
+
+# When configured, Gradle will run in incubating parallel mode.
+# This option should only be used with decoupled projects. More details, visit
+# http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects
+org.gradle.parallel=true
+
+# AndroidX package structure to make it clearer which packages are bundled with the
+# Android operating system, and which are packaged with your app's APK
+# https://developer.android.com/topic/libraries/support-library/androidx-rn
+android.useAndroidX=true
+
+# Enable AAPT2 PNG crunching
+android.enablePngCrunchInReleaseBuilds=true
+
+# Use this property to specify which architecture you want to build.
+# You can also override it from the CLI using
+# ./gradlew <task> -PreactNativeArchitectures=x86_64
+reactNativeArchitectures=armeabi-v7a,arm64-v8a,x86,x86_64
+
+# Use this property to enable support to the new architecture.
+# This will allow you to use TurboModules and the Fabric render in
+# your application. You should enable this flag either if you want
+# to write custom TurboModules/Fabric components OR use libraries that
+# are providing them.
+newArchEnabled=true
+
+# Use this property to enable or disable the Hermes JS engine.
+# If set to false, you will be using JSC instead.
+hermesEnabled=true
+
+# Use this property to enable edge-to-edge display support.
+# This allows your app to draw behind system bars for an immersive UI.
+# Note: Only works with ReactActivity and should not be used with custom Activity.
+edgeToEdgeEnabled=true
+
+# Enable GIF support in React Native images (~200 B increase)
+expo.gif.enabled=true
+# Enable webp support in React Native images (~85 KB increase)
+expo.webp.enabled=true
+# Enable animated webp support (~3.4 MB increase)
+# Disabled by default because iOS doesn't support animated webp
+expo.webp.animated=false
+
+# Enable network inspector
+EX_DEV_CLIENT_NETWORK_INSPECTOR=true
+
+# Use legacy packaging to compress native libraries in the resulting APK.
+expo.useLegacyPackaging=false
+
+expo.inlineModules.watchedDirectories=[]
+</file>
+
+<file path="android/gradle/wrapper/gradle-wrapper.properties">
+distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+distributionUrl=https\://services.gradle.org/distributions/gradle-9.3.1-bin.zip
+networkTimeout=10000
+validateDistributionUrl=true
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists
+</file>
+
+<file path="android/gradlew">
+#!/bin/sh
+
+#
+# Copyright © 2015 the original authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+##############################################################################
+#
+#   Gradle start up script for POSIX generated by Gradle.
+#
+#   Important for running:
+#
+#   (1) You need a POSIX-compliant shell to run this script. If your /bin/sh is
+#       noncompliant, but you have some other compliant shell such as ksh or
+#       bash, then to run this script, type that shell name before the whole
+#       command line, like:
+#
+#           ksh Gradle
+#
+#       Busybox and similar reduced shells will NOT work, because this script
+#       requires all of these POSIX shell features:
+#         * functions;
+#         * expansions «$var», «${var}», «${var:-default}», «${var+SET}»,
+#           «${var#prefix}», «${var%suffix}», and «$( cmd )»;
+#         * compound commands having a testable exit status, especially «case»;
+#         * various built-in commands including «command», «set», and «ulimit».
+#
+#   Important for patching:
+#
+#   (2) This script targets any POSIX shell, so it avoids extensions provided
+#       by Bash, Ksh, etc; in particular arrays are avoided.
+#
+#       The "traditional" practice of packing multiple parameters into a
+#       space-separated string is a well documented source of bugs and security
+#       problems, so this is (mostly) avoided, by progressively accumulating
+#       options in "$@", and eventually passing that to Java.
+#
+#       Where the inherited environment variables (DEFAULT_JVM_OPTS, JAVA_OPTS,
+#       and GRADLE_OPTS) rely on word-splitting, this is performed explicitly;
+#       see the in-line comments for details.
+#
+#       There are tweaks for specific operating systems such as AIX, CygWin,
+#       Darwin, MinGW, and NonStop.
+#
+#   (3) This script is generated from the Groovy template
+#       https://github.com/gradle/gradle/blob/HEAD/platforms/jvm/plugins-application/src/main/resources/org/gradle/api/internal/plugins/unixStartScript.txt
+#       within the Gradle project.
+#
+#       You can find Gradle at https://github.com/gradle/gradle/.
+#
+##############################################################################
+
+# Attempt to set APP_HOME
+
+# Resolve links: $0 may be a link
+app_path=$0
+
+# Need this for daisy-chained symlinks.
+while
+    APP_HOME=${app_path%"${app_path##*/}"}  # leaves a trailing /; empty if no leading path
+    [ -h "$app_path" ]
+do
+    ls=$( ls -ld "$app_path" )
+    link=${ls#*' -> '}
+    case $link in             #(
+      /*)   app_path=$link ;; #(
+      *)    app_path=$APP_HOME$link ;;
+    esac
+done
+
+# This is normally unused
+# shellcheck disable=SC2034
+APP_BASE_NAME=${0##*/}
+# Discard cd standard output in case $CDPATH is set (https://github.com/gradle/gradle/issues/25036)
+APP_HOME=$( cd -P "${APP_HOME:-./}" > /dev/null && printf '%s\n' "$PWD" ) || exit
+
+# Use the maximum available, or set MAX_FD != -1 to use that value.
+MAX_FD=maximum
+
+warn () {
+    echo "$*"
+} >&2
+
+die () {
+    echo
+    echo "$*"
+    echo
+    exit 1
+} >&2
+
+# OS specific support (must be 'true' or 'false').
+cygwin=false
+msys=false
+darwin=false
+nonstop=false
+case "$( uname )" in                #(
+  CYGWIN* )         cygwin=true  ;; #(
+  Darwin* )         darwin=true  ;; #(
+  MSYS* | MINGW* )  msys=true    ;; #(
+  NONSTOP* )        nonstop=true ;;
+esac
+
+
+
+# Determine the Java command to use to start the JVM.
+if [ -n "$JAVA_HOME" ] ; then
+    if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
+        # IBM's JDK on AIX uses strange locations for the executables
+        JAVACMD=$JAVA_HOME/jre/sh/java
+    else
+        JAVACMD=$JAVA_HOME/bin/java
+    fi
+    if [ ! -x "$JAVACMD" ] ; then
+        die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME
+
+Please set the JAVA_HOME variable in your environment to match the
+location of your Java installation."
+    fi
+else
+    JAVACMD=java
+    if ! command -v java >/dev/null 2>&1
+    then
+        die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+
+Please set the JAVA_HOME variable in your environment to match the
+location of your Java installation."
+    fi
+fi
+
+# Increase the maximum file descriptors if we can.
+if ! "$cygwin" && ! "$darwin" && ! "$nonstop" ; then
+    case $MAX_FD in #(
+      max*)
+        # In POSIX sh, ulimit -H is undefined. That's why the result is checked to see if it worked.
+        # shellcheck disable=SC2039,SC3045
+        MAX_FD=$( ulimit -H -n ) ||
+            warn "Could not query maximum file descriptor limit"
+    esac
+    case $MAX_FD in  #(
+      '' | soft) :;; #(
+      *)
+        # In POSIX sh, ulimit -n is undefined. That's why the result is checked to see if it worked.
+        # shellcheck disable=SC2039,SC3045
+        ulimit -n "$MAX_FD" ||
+            warn "Could not set maximum file descriptor limit to $MAX_FD"
+    esac
+fi
+
+# Collect all arguments for the java command, stacking in reverse order:
+#   * args from the command line
+#   * the main class name
+#   * -classpath
+#   * -D...appname settings
+#   * --module-path (only if needed)
+#   * DEFAULT_JVM_OPTS, JAVA_OPTS, and GRADLE_OPTS environment variables.
+
+# For Cygwin or MSYS, switch paths to Windows format before running java
+if "$cygwin" || "$msys" ; then
+    APP_HOME=$( cygpath --path --mixed "$APP_HOME" )
+
+    JAVACMD=$( cygpath --unix "$JAVACMD" )
+
+    # Now convert the arguments - kludge to limit ourselves to /bin/sh
+    for arg do
+        if
+            case $arg in                                #(
+              -*)   false ;;                            # don't mess with options #(
+              /?*)  t=${arg#/} t=/${t%%/*}              # looks like a POSIX filepath
+                    [ -e "$t" ] ;;                      #(
+              *)    false ;;
+            esac
+        then
+            arg=$( cygpath --path --ignore --mixed "$arg" )
+        fi
+        # Roll the args list around exactly as many times as the number of
+        # args, so each arg winds up back in the position where it started, but
+        # possibly modified.
+        #
+        # NB: a `for` loop captures its iteration list before it begins, so
+        # changing the positional parameters here affects neither the number of
+        # iterations, nor the values presented in `arg`.
+        shift                   # remove old arg
+        set -- "$@" "$arg"      # push replacement arg
+    done
+fi
+
+
+# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
+
+# Collect all arguments for the java command:
+#   * DEFAULT_JVM_OPTS, JAVA_OPTS, and optsEnvironmentVar are not allowed to contain shell fragments,
+#     and any embedded shellness will be escaped.
+#   * For example: A user cannot expect ${Hostname} to be expanded, as it is an environment variable and will be
+#     treated as '${Hostname}' itself on the command line.
+
+set -- \
+        "-Dorg.gradle.appname=$APP_BASE_NAME" \
+        -jar "$APP_HOME/gradle/wrapper/gradle-wrapper.jar" \
+        "$@"
+
+# Stop when "xargs" is not available.
+if ! command -v xargs >/dev/null 2>&1
+then
+    die "xargs is not available"
+fi
+
+# Use "xargs" to parse quoted args.
+#
+# With -n1 it outputs one arg per line, with the quotes and backslashes removed.
+#
+# In Bash we could simply go:
+#
+#   readarray ARGS < <( xargs -n1 <<<"$var" ) &&
+#   set -- "${ARGS[@]}" "$@"
+#
+# but POSIX shell has neither arrays nor command substitution, so instead we
+# post-process each arg (as a line of input to sed) to backslash-escape any
+# character that might be a shell metacharacter, then use eval to reverse
+# that process (while maintaining the separation between arguments), and wrap
+# the whole thing up as a single "set" statement.
+#
+# This will of course break if any of these variables contains a newline or
+# an unmatched quote.
+#
+
+eval "set -- $(
+        printf '%s\n' "$DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS" |
+        xargs -n1 |
+        sed ' s~[^-[:alnum:]+,./:=@_]~\\&~g; ' |
+        tr '\n' ' '
+    )" '"$@"'
+
+exec "$JAVACMD" "$@"
+</file>
+
+<file path="android/gradlew.bat">
+@REM Copyright (c) Meta Platforms, Inc. and affiliates.
+@REM
+@REM This source code is licensed under the MIT license found in the
+@REM LICENSE file in the root directory of this source tree.
+
+@rem
+@rem Copyright 2015 the original author or authors.
+@rem
+@rem Licensed under the Apache License, Version 2.0 (the "License");
+@rem you may not use this file except in compliance with the License.
+@rem You may obtain a copy of the License at
+@rem
+@rem      https://www.apache.org/licenses/LICENSE-2.0
+@rem
+@rem Unless required by applicable law or agreed to in writing, software
+@rem distributed under the License is distributed on an "AS IS" BASIS,
+@rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+@rem See the License for the specific language governing permissions and
+@rem limitations under the License.
+@rem
+@rem SPDX-License-Identifier: Apache-2.0
+@rem
+
+@if "%DEBUG%"=="" @echo off
+@rem ##########################################################################
+@rem
+@rem  Gradle startup script for Windows
+@rem
+@rem ##########################################################################
+
+@rem Set local scope for the variables with windows NT shell
+if "%OS%"=="Windows_NT" setlocal
+
+set DIRNAME=%~dp0
+if "%DIRNAME%"=="" set DIRNAME=.
+@rem This is normally unused
+set APP_BASE_NAME=%~n0
+set APP_HOME=%DIRNAME%
+
+@rem Resolve any "." and ".." in APP_HOME to make it shorter.
+for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
+
+@rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
+set DEFAULT_JVM_OPTS="-Xmx64m" "-Xms64m"
+
+@rem Find java.exe
+if defined JAVA_HOME goto findJavaFromJavaHome
+
+set JAVA_EXE=java.exe
+%JAVA_EXE% -version >NUL 2>&1
+if %ERRORLEVEL% equ 0 goto execute
+
+echo. 1>&2
+echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH. 1>&2
+echo. 1>&2
+echo Please set the JAVA_HOME variable in your environment to match the 1>&2
+echo location of your Java installation. 1>&2
+
+goto fail
+
+:findJavaFromJavaHome
+set JAVA_HOME=%JAVA_HOME:"=%
+set JAVA_EXE=%JAVA_HOME%/bin/java.exe
+
+if exist "%JAVA_EXE%" goto execute
+
+echo. 1>&2
+echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME% 1>&2
+echo. 1>&2
+echo Please set the JAVA_HOME variable in your environment to match the 1>&2
+echo location of your Java installation. 1>&2
+
+goto fail
+
+:execute
+@rem Setup the command line
+
+
+
+@rem Execute Gradle
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -jar "%APP_HOME%\gradle\wrapper\gradle-wrapper.jar" %*
+
+:end
+@rem End local scope for the variables with windows NT shell
+if %ERRORLEVEL% equ 0 goto mainEnd
+
+:fail
+rem Set variable GRADLE_EXIT_CONSOLE if you need the _script_ return code instead of
+rem the _cmd.exe /c_ return code!
+set EXIT_CODE=%ERRORLEVEL%
+if %EXIT_CODE% equ 0 set EXIT_CODE=1
+if not ""=="%GRADLE_EXIT_CONSOLE%" exit %EXIT_CODE%
+exit /b %EXIT_CODE%
+
+:mainEnd
+if "%OS%"=="Windows_NT" endlocal
+
+:omega
+</file>
+
+<file path="android/settings.gradle">
+pluginManagement {
+  def reactNativeGradlePlugin = new File(
+    providers.exec {
+      workingDir(rootDir)
+      commandLine("node", "--print", "require.resolve('@react-native/gradle-plugin/package.json', { paths: [require.resolve('react-native/package.json')] })")
+    }.standardOutput.asText.get().trim()
+  ).getParentFile().absolutePath
+  includeBuild(reactNativeGradlePlugin)
+  
+  def expoPluginsPath = new File(
+    providers.exec {
+      workingDir(rootDir)
+      commandLine("node", "--print", "require.resolve('expo-modules-autolinking/package.json', { paths: [require.resolve('expo/package.json')] })")
+    }.standardOutput.asText.get().trim(),
+    "../android/expo-gradle-plugin"
+  ).absolutePath
+  includeBuild(expoPluginsPath)
+}
+
+plugins {
+  id("com.facebook.react.settings")
+  id("expo-autolinking-settings")
+}
+
+extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
+  if (System.getenv('EXPO_USE_COMMUNITY_AUTOLINKING') == '1') {
+    ex.autolinkLibrariesFromCommand()
+  } else {
+    ex.autolinkLibrariesFromCommand(expoAutolinking.rnConfigCommand)
+  }
+}
+expoAutolinking.useExpoModules()
+
+rootProject.name = 'ProfiFinder'
+
+expoAutolinking.useExpoVersionCatalog()
+
+include ':app'
+includeBuild(expoAutolinking.reactNativeGradlePlugin)
+</file>
+
+<file path="babel.config.js">
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: [
+      ["babel-preset-expo", { jsxImportSource: "nativewind" }],
+      "nativewind/babel",
+    ],
+  };
+};
+</file>
+
+<file path="eas.json">
+{
+  "cli": {
+    "version": ">= 20.5.1",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {}
+  },
+  "submit": {
+    "production": {}
+  }
+}
+</file>
+
+<file path="eslint.config.js">
+// https://docs.expo.dev/guides/using-eslint/
+const { defineConfig } = require('eslint/config');
+const expoConfig = require('eslint-config-expo/flat');
+
+module.exports = defineConfig([
+  expoConfig,
+  {
+    ignores: ['dist/*'],
+  },
+]);
+</file>
+
+<file path="metro.config.js">
+const { getDefaultConfig } = require("expo/metro-config");
+const { withNativeWind } = require("nativewind/metro");
+
+const config = getDefaultConfig(__dirname);
+
+module.exports = withNativeWind(config, { input: "./src/global.css" });
+</file>
+
+<file path="src/global.css">
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+</file>
+
+<file path="tailwind.config.js">
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{js,jsx}"],
+  presets: [require("nativewind/preset")],
+  darkMode: "media",
+  theme: {
+    extend: {
+      colors: {
+        navy: "#0D233B",
+        brand: { DEFAULT: "#2563EB", dark: "#1D4ED8", light: "#60A5FA", tint: "#E8F0FE" },
+        muted: "#64748B",
+      },
+    },
+  },
+  plugins: [],
+};
+</file>
+
+<file path=".gitignore">
+node_modules/
+.expo/
+dist/
+*.log
+.DS_Store
+</file>
+
+<file path="jsconfig.json">
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "@/*": ["./src/*"] }
+  }
+}
+</file>
+
+<file path="scripts/reset-project.js">
+#!/usr/bin/env node
+
+/**
+ * This script is used to reset the project to a blank state.
+ * It deletes or moves the /app, /components, /hooks, /scripts, and /constants directories to /app-example based on user input and creates a new /app directory with an index.tsx and _layout.tsx file.
+ * You can remove the `reset-project` script from package.json and safely delete this file after running it.
+ */
+
+const fs = require("fs");
+const path = require("path");
+const readline = require("readline");
+
+const root = process.cwd();
+const oldDirs = ["app", "components", "hooks", "constants", "scripts"];
+const exampleDir = "app-example";
+const newAppDir = "app";
+const exampleDirPath = path.join(root, exampleDir);
+
+const indexContent = `import { Text, View } from "react-native";
+
+export default function Index() {
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Text>Edit app/index.tsx to edit this screen.</Text>
+    </View>
+  );
+}
+`;
+
+const layoutContent = `import { Stack } from "expo-router";
+
+export default function RootLayout() {
+  return <Stack />;
+}
+`;
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+const moveDirectories = async (userInput) => {
+  try {
+    if (userInput === "y") {
+      await fs.promises.mkdir(exampleDirPath, { recursive: true });
+      console.log(`📁 /${exampleDir} directory created.`);
+    }
+
+    for (const dir of oldDirs) {
+      const oldDirPath = path.join(root, dir);
+      if (fs.existsSync(oldDirPath)) {
+        if (userInput === "y") {
+          const newDirPath = path.join(root, exampleDir, dir);
+          await fs.promises.rename(oldDirPath, newDirPath);
+          console.log(`➡️ /${dir} moved to /${exampleDir}/${dir}.`);
+        } else {
+          await fs.promises.rm(oldDirPath, { recursive: true, force: true });
+          console.log(`❌ /${dir} deleted.`);
+        }
+      } else {
+        console.log(`➡️ /${dir} does not exist, skipping.`);
+      }
+    }
+
+    const newAppDirPath = path.join(root, newAppDir);
+    await fs.promises.mkdir(newAppDirPath, { recursive: true });
+    console.log("\n📁 New /app directory created.");
+
+    const indexPath = path.join(newAppDirPath, "index.tsx");
+    await fs.promises.writeFile(indexPath, indexContent);
+    console.log("📄 app/index.tsx created.");
+
+    const layoutPath = path.join(newAppDirPath, "_layout.tsx");
+    await fs.promises.writeFile(layoutPath, layoutContent);
+    console.log("📄 app/_layout.tsx created.");
+
+    console.log("\n✅ Project reset complete. Next steps:");
+    console.log(
+      `1. Run \`npx expo start\` to start a development server.\n2. Edit app/index.tsx to edit the main screen.${
+        userInput === "y"
+          ? `\n3. Delete the /${exampleDir} directory when you're done referencing it.`
+          : ""
+      }`,
+    );
+  } catch (error) {
+    console.error(`❌ Error during script execution: ${error.message}`);
+  }
+};
+
+rl.question(
+  "Do you want to move existing files to /app-example instead of deleting them? (Y/n): ",
+  (answer) => {
+    const userInput = answer.trim().toLowerCase() || "y";
+    if (userInput === "y" || userInput === "n") {
+      moveDirectories(userInput).finally(() => rl.close());
+    } else {
+      console.log("❌ Invalid input. Please enter 'Y' or 'N'.");
+      rl.close();
+    }
+  },
+);
+</file>
+
+<file path="src/app/(tabs)/_layout.jsx">
+import { Tabs } from "expo-router";
+import { Feather } from "@expo/vector-icons";
+import { useColorScheme } from "react-native";
+
+export default function TabsLayout() {
+  const scheme = useColorScheme();
+  const dark = scheme === "dark";
+
+  return (
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: "#2563EB",
+        tabBarInactiveTintColor: dark ? "#7A8699" : "#94A3B8",
+        tabBarStyle: {
+          backgroundColor: dark ? "#1b2226" : "#FFFFFF",
+          borderTopColor: dark ? "#3a444a" : "#EAEEF5",
+          height: 64,
+          paddingBottom: 10,
+          paddingTop: 8,
+        },
+        tabBarLabelStyle: { fontSize: 12, fontWeight: "600" },
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Поиск",
+          tabBarIcon: ({ color, size }) => <Feather name="search" size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="catalog"
+        options={{
+          title: "Каталог",
+          tabBarIcon: ({ color, size }) => <Feather name="grid" size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="become"
+        options={{
+          title: "Стать экспертом",
+          tabBarIcon: ({ color, size }) => <Feather name="user-plus" size={size} color={color} />,
+        }}
+      />
+    </Tabs>
+  );
+}
+</file>
+
+<file path="src/app/(tabs)/become.jsx">
+import { View, Text, Pressable, ScrollView } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Feather } from "@expo/vector-icons";
+
+const bullets = [
+  "Опишите компетенции, темы и опыт — всё в одном профиле",
+  "Задайте свои форматы и стоимость консультаций",
+  "Один аккаунт работает и как эксперт, и как пользователь",
+];
+
+export default function BecomeExpertScreen() {
+  const insets = useSafeAreaInsets();
+
+  return (
+    <ScrollView
+      className="flex-1 bg-[#F5F8FC] dark:bg-[#1b2226]"
+      contentContainerStyle={{ paddingTop: insets.top + 12, paddingBottom: insets.bottom + 32, paddingHorizontal: 20 }}
+      showsVerticalScrollIndicator={false}
+    >
+      <View className="flex-row items-center gap-2">
+        <View className="h-[14px] w-[14px] rounded-full border-2 border-[#2563EB]" />
+        <Text className="text-[13px] font-semibold tracking-[1.5px] text-[#2563EB]">ДЛЯ СПЕЦИАЛИСТОВ</Text>
+      </View>
+      <Text className="mt-3 text-[28px] font-bold leading-[34px] text-[#0D233B] dark:text-white">
+        Вы эксперт? Получайте заказы на консультации
+      </Text>
+      <Text className="mt-3 text-[15px] leading-[22px] text-[#64748B] dark:text-gray-400">
+        Отметьте при регистрации, что вы специалист, и заполните профиль. Пользователи найдут вас в
+        каталоге, а платформа поможет зафиксировать каждую консультацию.
+      </Text>
+
+      <View className="mt-5 gap-3">
+        {bullets.map((b) => (
+          <View key={b} className="flex-row items-start gap-3">
+            <View className="mt-[1px] h-[22px] w-[22px] items-center justify-center rounded-full bg-[#E8F0FE] dark:bg-[#0D233B]">
+              <Feather name="check" size={13} color="#2563EB" />
+            </View>
+            <Text className="flex-1 text-[15px] text-[#0D233B] dark:text-gray-200">{b}</Text>
+          </View>
+        ))}
+      </View>
+
+      <View
+        style={{ elevation: 3 }}
+        className="mt-7 overflow-hidden rounded-2xl border border-gray-100 bg-white dark:border-[#3a444a] dark:bg-[#2c353a]"
+      >
+        <View className="flex-row gap-[6px] border-b border-gray-100 bg-[#F5F8FC] px-4 py-3 dark:border-[#3a444a] dark:bg-[#1b2226]">
+          {["Профиль", "Темы", "Форматы"].map((t, i) => (
+            <View key={t} className={`rounded-lg px-3 py-[6px] ${i === 0 ? "bg-[#0D233B]" : ""}`}>
+              <Text className={`text-[12px] font-semibold ${i === 0 ? "text-white" : "text-[#64748B] dark:text-gray-400"}`}>{t}</Text>
+            </View>
+          ))}
+        </View>
+
+        <View className="p-[18px]">
+          <Text className="mb-2 text-[11px] uppercase tracking-[1px] text-[#64748B] dark:text-gray-400">Имя и специальность</Text>
+          <View className="rounded-xl border border-gray-200 px-[14px] py-[12px] dark:border-[#3a444a]">
+            <Text className="text-[14px] text-[#0D233B] dark:text-white">Марина Ковалёва · Продукт-менеджер</Text>
+          </View>
+
+          <Text className="mb-2 mt-4 text-[11px] uppercase tracking-[1px] text-[#64748B] dark:text-gray-400">Компетенции</Text>
+          <View className="flex-row flex-wrap gap-[7px]">
+            {["Продукт-менеджмент", "Карьера"].map((t) => (
+              <View key={t} className="rounded-full bg-[#E8F0FE] px-[11px] py-[5px] dark:bg-[#0D233B]">
+                <Text className="text-[12px] font-medium text-[#1D4ED8] dark:text-[#93B4FF]">{t}</Text>
+              </View>
+            ))}
+            <View className="rounded-full border border-dashed border-gray-300 px-[11px] py-[5px] dark:border-[#3a444a]">
+              <Text className="text-[12px] text-[#64748B] dark:text-gray-400">+ добавить</Text>
+            </View>
+          </View>
+        </View>
+
+        <View className="flex-row items-center justify-between border-t border-gray-100 bg-[#F5F8FC] px-[18px] py-[14px] dark:border-[#3a444a] dark:bg-[#1b2226]">
+          <Text className="text-[11px] text-[#64748B] dark:text-gray-400">черновик · виден только вам</Text>
+          <View className="rounded-lg bg-[#2563EB] px-[16px] py-[9px]">
+            <Text className="text-[13px] font-semibold text-white">Опубликовать</Text>
+          </View>
+        </View>
+      </View>
+
+      <Pressable className="mt-7 items-center rounded-2xl bg-[#2563EB] py-[15px] active:opacity-90">
+        <Text className="text-[15px] font-semibold text-white">Создать профиль специалиста</Text>
+      </Pressable>
+    </ScrollView>
+  );
+}
+</file>
+
+<file path="src/app/expert/[id].jsx">
+import { useState } from "react";
+import { View, Text, ScrollView, Pressable } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useLocalSearchParams } from "expo-router";
+import { Feather, Ionicons } from "@expo/vector-icons";
+
+import { getExpert } from "@/data/catalog";
+
+function SectionTitle({ children }) {
+  return (
+    <View className="mb-3 mt-6 flex-row items-center gap-2">
+      <View className="h-[13px] w-[13px] rounded-full border-2 border-[#2563EB]" />
+      <Text className="text-[12px] font-semibold uppercase tracking-[1.4px] text-[#2563EB]">{children}</Text>
+    </View>
+  );
+}
+
+export default function ExpertProfileScreen() {
+  const { id } = useLocalSearchParams();
+  const insets = useSafeAreaInsets();
+  const expert = getExpert(id);
+  const [revealed, setRevealed] = useState(false);
+
+  if (!expert) {
+    return (
+      <View className="flex-1 items-center justify-center bg-[#F5F8FC] dark:bg-[#1b2226]">
+        <Text className="text-[#64748B]">Эксперт не найден</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View className="flex-1 bg-[#F5F8FC] dark:bg-[#1b2226]">
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 24 }}>
+        <View className="bg-[#0D233B] px-5 pb-6 pt-6">
+          <View className="flex-row items-center gap-4">
+            <View style={{ backgroundColor: expert.color }} className="h-[64px] w-[64px] items-center justify-center rounded-full">
+              <Text className="text-[23px] font-bold text-white">{expert.initials}</Text>
+            </View>
+            <View className="flex-1">
+              <Text className="text-[22px] font-extrabold text-white">{expert.name}</Text>
+              <Text className="mt-1 text-[14px] text-white/70">{expert.role}</Text>
+              <View className="mt-2 flex-row items-center gap-[6px]">
+                <Ionicons name="star" size={14} color="#F59E0B" />
+                <Text className="text-[13px] text-white">{expert.rating} · {expert.reviews} отзывов</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        <View className="px-5">
+          <SectionTitle>О специалисте</SectionTitle>
+          <Text className="text-[15px] leading-[22px] text-[#0D233B] dark:text-gray-200">{expert.bio}</Text>
+
+          <SectionTitle>Компетенции</SectionTitle>
+          <View className="gap-[10px]">
+            {expert.comp.map((c) => (
+              <View key={c} className="flex-row items-start gap-[10px]">
+                <View className="mt-[1px] h-[18px] w-[18px] items-center justify-center rounded-full bg-[#E8F0FE] dark:bg-[#0D233B]">
+                  <Feather name="check" size={11} color="#2563EB" />
+                </View>
+                <Text className="flex-1 text-[14px] text-[#0D233B] dark:text-gray-200">{c}</Text>
+              </View>
+            ))}
+          </View>
+
+          <SectionTitle>Темы консультаций</SectionTitle>
+          <View className="flex-row flex-wrap gap-[8px]">
+            {expert.topicsFull.map((t) => (
+              <View key={t} className="rounded-full bg-[#E8F0FE] px-[11px] py-[5px] dark:bg-[#0D233B]">
+                <Text className="text-[12px] font-medium text-[#1D4ED8] dark:text-[#93B4FF]">{t}</Text>
+              </View>
+            ))}
+          </View>
+
+          <SectionTitle>Опыт</SectionTitle>
+          {expert.exp.map((x) => (
+            <View key={x.rw} className="mb-4 border-l-2 border-[#E8F0FE] pl-4 dark:border-[#0D233B]">
+              <Text className="text-[11px] tracking-[0.5px] text-[#1D4ED8] dark:text-[#93B4FF]">{x.yr}</Text>
+              <Text className="mt-[2px] text-[14px] font-bold text-[#0D233B] dark:text-white">{x.rw}</Text>
+              <Text className="mt-[2px] text-[13px] text-[#64748B] dark:text-gray-400">{x.ds}</Text>
+            </View>
+          ))}
+
+          <SectionTitle>Форматы и стоимость</SectionTitle>
+          <View className="gap-[10px]">
+            {expert.formats.map((f) => (
+              <View key={f.fn} className="flex-row items-center justify-between rounded-xl border border-gray-100 bg-white px-[16px] py-[14px] dark:border-[#3a444a] dark:bg-[#2c353a]">
+                <View className="flex-1 pr-2">
+                  <Text className="text-[14px] font-semibold text-[#0D233B] dark:text-white">{f.fn}</Text>
+                  <Text className="mt-[2px] text-[12px] text-[#64748B] dark:text-gray-400">{f.fd}</Text>
+                </View>
+                <Text className="text-[16px] font-bold text-[#0D233B] dark:text-white">{f.fp}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+      </ScrollView>
+
+      <View
+        style={{ paddingBottom: insets.bottom + 12 }}
+        className="border-t border-gray-100 bg-white px-5 pt-4 dark:border-[#3a444a] dark:bg-[#2c353a]"
+      >
+        {!revealed ? (
+          <Pressable onPress={() => setRevealed(true)} className="items-center rounded-2xl bg-[#2563EB] py-[15px] active:opacity-90">
+            <Text className="text-[15px] font-semibold text-white">Получить контакты специалиста</Text>
+          </Pressable>
+        ) : (
+          <View className="flex-row items-center gap-2 rounded-2xl border border-[#2563EB] bg-[#E8F0FE] px-4 py-[14px] dark:bg-[#0D233B]">
+            <Feather name="phone" size={16} color="#1D4ED8" />
+            <Text className="flex-1 text-[14px] font-semibold text-[#1D4ED8] dark:text-[#93B4FF]">{expert.contact}</Text>
+          </View>
+        )}
+        <Text className="mt-[10px] text-center text-[12px] text-[#64748B] dark:text-gray-400">
+          Специалист получит уведомление и зафиксирует консультацию
+        </Text>
+      </View>
+    </View>
+  );
+}
+</file>
+
+<file path="src/components/Chip.jsx">
+import { Pressable, Text } from "react-native";
+
+export function Chip({ label, active, onPress }) {
+  return (
+    <Pressable
+      onPress={onPress}
+      className={`mr-2 rounded-full border px-[15px] py-[8px] ${
+        active
+          ? "border-[#0D233B] bg-[#0D233B] dark:border-white dark:bg-white"
+          : "border-gray-200 bg-white dark:border-[#3a444a] dark:bg-[#2c353a]"
+      }`}
+    >
+      <Text
+        className={`text-[14px] font-medium ${
+          active ? "text-white dark:text-[#0D233B]" : "text-[#0D233B] dark:text-gray-200"
+        }`}
+      >
+        {label}
+      </Text>
+    </Pressable>
+  );
+}
+</file>
+
+<file path="src/components/ExpertCard.jsx">
+import { View, Text, Pressable } from "react-native";
+import { Feather, Ionicons } from "@expo/vector-icons";
+
+export function ExpertCard({ expert, onPress }) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={{ elevation: 2 }}
+      className="mb-[16px] rounded-[18px] border border-gray-100 bg-white p-[18px] active:opacity-90 dark:border-[#3a444a] dark:bg-[#2c353a]"
+    >
+      <View className="flex-row items-start gap-3">
+        <View className="relative">
+          <View style={{ backgroundColor: expert.color }} className="h-[52px] w-[52px] items-center justify-center rounded-full">
+            <Text className="text-[18px] font-bold text-white">{expert.initials}</Text>
+          </View>
+          <View className="absolute -bottom-[1px] -right-[1px] h-[15px] w-[15px] rounded-full border-2 border-white bg-[#2563EB] dark:border-[#2c353a]" />
+        </View>
+        <View className="flex-1">
+          <Text className="text-[16px] font-bold text-[#0D233B] dark:text-white">{expert.name}</Text>
+          <Text className="mt-[2px] text-[13px] text-[#64748B] dark:text-gray-400">{expert.role}</Text>
+          <View className="mt-[6px] flex-row items-center gap-[4px]">
+            <Ionicons name="star" size={13} color="#F59E0B" />
+            <Text className="text-[13px] font-semibold text-[#0D233B] dark:text-white">{expert.rating}</Text>
+            <Text className="text-[13px] text-[#64748B] dark:text-gray-400">· {expert.reviews} отзывов</Text>
+          </View>
+        </View>
+      </View>
+
+      <View className="my-[14px] h-[1px] bg-gray-100 dark:bg-[#3a444a]" />
+
+      <View className="mb-[12px] flex-row flex-wrap gap-[7px]">
+        {expert.tags.map((t) => (
+          <View key={t} className="rounded-full bg-[#E8F0FE] px-[11px] py-[5px] dark:bg-[#0D233B]">
+            <Text className="text-[12px] font-medium text-[#1D4ED8] dark:text-[#93B4FF]">{t}</Text>
+          </View>
+        ))}
+      </View>
+
+      <Text className="mb-[14px] text-[14px] leading-[20px] text-[#64748B] dark:text-gray-400">{expert.short}</Text>
+
+      <View className="flex-row items-center justify-between border-t border-gray-100 pt-[14px] dark:border-[#3a444a]">
+        <View className="flex-1 flex-row items-center gap-[6px] pr-2">
+          <Feather name="video" size={14} color="#2563EB" />
+          <Text className="text-[13px] text-[#64748B] dark:text-gray-400" numberOfLines={1}>{expert.fmtLabel}</Text>
+        </View>
+        <Text className="text-[16px] font-bold text-[#0D233B] dark:text-white">
+          {expert.price} ₽<Text className="text-[12px] font-medium text-[#64748B] dark:text-gray-400"> / {expert.per}</Text>
+        </Text>
+      </View>
+    </Pressable>
+  );
+}
+</file>
+
+<file path="src/components/Logo.jsx">
+import { View, Text } from "react-native";
+
+// Лого-лупа из View (круг + повёрнутая «ручка»), без SVG.
+export function LensMark({ size = 30, ring = "#0D233B" }) {
+  const s = size;
+  return (
+    <View style={{ width: s, height: s }}>
+      <View
+        style={{
+          position: "absolute",
+          top: s * 0.05,
+          left: s * 0.05,
+          width: s * 0.72,
+          height: s * 0.72,
+          borderRadius: s,
+          borderWidth: Math.max(2, s * 0.11),
+          borderColor: ring,
+        }}
+      />
+      <View
+        style={{
+          position: "absolute",
+          bottom: s * 0.02,
+          right: s * 0.04,
+          width: s * 0.34,
+          height: Math.max(3, s * 0.13),
+          borderRadius: s,
+          backgroundColor: "#2563EB",
+          transform: [{ rotate: "45deg" }],
+        }}
+      />
+    </View>
+  );
+}
+
+export function Wordmark({ size = 22, dark = false }) {
+  return (
+    <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+      <LensMark size={size + 8} ring={dark ? "#FFFFFF" : "#0D233B"} />
+      <Text style={{ fontSize: size, fontWeight: "800", letterSpacing: -0.5 }}>
+        <Text style={{ color: dark ? "#FFFFFF" : "#0D233B" }}>Profi</Text>
+        <Text style={{ color: "#2563EB" }}>Finder</Text>
+      </Text>
+    </View>
+  );
+}
+</file>
+
+<file path="src/data/catalog.js">
+// Единый источник данных каталога (моки). Вынесен из экранов на этом шаге.
+
+export const categories = [
+  { nm: "Карьера", topic: "Карьера", count: "42 эксперта", icon: "compass" },
+  { nm: "Продукт", topic: "Продукт", count: "31 эксперт", icon: "layers" },
+  {
+    nm: "Разработка",
+    topic: "Разработка",
+    count: "58 экспертов",
+    icon: "code",
+  },
+  { nm: "Дизайн", topic: "Дизайн", count: "27 экспертов", icon: "pen-tool" },
+  { nm: "Найм и HR", topic: "HR", count: "34 эксперта", icon: "users" },
+  {
+    nm: "Стартапы",
+    topic: "Стартапы",
+    count: "22 эксперта",
+    icon: "trending-up",
+  },
+];
+
+export const topicFilters = [
+  { label: "Все", val: "all" },
+  { label: "Карьера", val: "Карьера" },
+  { label: "Продукт", val: "Продукт" },
+  { label: "Разработка", val: "Разработка" },
+  { label: "Дизайн", val: "Дизайн" },
+  { label: "Найм и HR", val: "HR" },
+  { label: "Стартапы", val: "Стартапы" },
+];
+
+export const formatFilters = [
+  { label: "Любой", val: "all" },
+  { label: "Видеозвонок", val: "Видеозвонок" },
+  { label: "Переписка", val: "Переписка" },
+  { label: "Разбор материалов", val: "Разбор" },
+  { label: "Серия встреч", val: "Серия" },
+];
+
+export const quickTags = [
+  { label: "Выбор профессии", topic: "Карьера" },
+  { label: "Подбор персонала", topic: "HR" },
+  { label: "Разбор проекта", topic: "Разработка" },
+];
+
+export const experts = [
+  {
+    id: 1,
+    initials: "МК",
+    color: "#2563EB",
+    name: "Марина Ковалёва",
+    role: "Продукт-менеджер · Москва",
+    rating: "4.9",
+    reviews: "87",
+    topics: ["Продукт", "Карьера"],
+    format: "Видеозвонок",
+    fmtLabel: "Видеозвонок · 60 мин",
+    price: "3 500",
+    per: "консультация",
+    short:
+      "Помогу перейти в продакт-менеджмент и собрать карьерный трек без лишних кругов.",
+    tags: ["Продукт-менеджмент", "Карьерный трек"],
+    bio: "8 лет в продуктовых командах, вывела на рынок три B2C-продукта. Наставник в двух акселераторах.",
+    comp: [
+      "Переход в продакт-менеджмент из смежных ролей",
+      "Приоритизация и продуктовая стратегия",
+      "Подготовка к продуктовым собеседованиям",
+    ],
+    topicsFull: [
+      "Выбор карьерного направления",
+      "Продуктовая стратегия",
+      "Разбор оффера",
+    ],
+    exp: [
+      {
+        yr: "2019 — сейчас",
+        rw: "Lead PM, финтех-продукт",
+        ds: "Команда из 6 человек, рост MAU ×4",
+      },
+      {
+        yr: "2016 — 2019",
+        rw: "Product Manager, e-commerce",
+        ds: "Запуск мобильного приложения с нуля",
+      },
+    ],
+    formats: [
+      { fn: "Видеозвонок", fd: "60 минут · разбор вопроса", fp: "3 500 ₽" },
+      { fn: "Серия из 3 встреч", fd: "сопровождение перехода", fp: "9 000 ₽" },
+    ],
+    contact: "@marina_pm · marina@profifinder.demo",
+  },
+  {
+    id: 2,
+    initials: "АС",
+    color: "#0D233B",
+    name: "Артём Соколов",
+    role: "Head of HR · Санкт-Петербург",
+    rating: "5.0",
+    reviews: "64",
+    topics: ["HR", "Карьера"],
+    format: "Переписка",
+    fmtLabel: "Переписка + звонок",
+    price: "2 800",
+    per: "консультация",
+    short:
+      "Разберём вашу вакансию, воронку найма или подготовку к собеседованию с двух сторон стола.",
+    tags: ["Подбор персонала", "Собеседования"],
+    bio: "12 лет в найме — от стартапов до корпораций. Провёл более 2000 собеседований.",
+    comp: [
+      "Построение воронки найма",
+      "Подбор и оценка кандидатов",
+      "Подготовка соискателя к интервью",
+    ],
+    topicsFull: [
+      "Подбор персонала",
+      "Найм в команду",
+      "Прохождение собеседований",
+    ],
+    exp: [
+      {
+        yr: "2020 — сейчас",
+        rw: "Head of HR, IT-компания",
+        ds: "Отдел найма 40+ человек в год",
+      },
+      {
+        yr: "2014 — 2020",
+        rw: "Recruiter → Team Lead",
+        ds: "Технический и продуктовый найм",
+      },
+    ],
+    formats: [
+      { fn: "Переписка", fd: "асинхронный разбор кейса", fp: "1 500 ₽" },
+      { fn: "Видеозвонок", fd: "45 минут", fp: "2 800 ₽" },
+    ],
+    contact: "@artem_hr · artem@profifinder.demo",
+  },
+  {
+    id: 3,
+    initials: "ДВ",
+    color: "#3B82F6",
+    name: "Даниил Верещагин",
+    role: "Staff Engineer · удалённо",
+    rating: "4.8",
+    reviews: "52",
+    topics: ["Разработка"],
+    format: "Разбор",
+    fmtLabel: "Разбор материалов",
+    price: "4 000",
+    per: "разбор",
+    short:
+      "Пришлите архитектуру или код проекта — вернусь с письменным разбором и планом действий.",
+    tags: ["Архитектура", "Code review"],
+    bio: "15 лет в бэкенд-разработке и распределённых системах. Ревьюер и ментор инженеров.",
+    comp: [
+      "Проектирование архитектуры сервисов",
+      "Разбор проблемы на проекте",
+      "Code review и рефакторинг",
+    ],
+    topicsFull: ["Архитектура backend", "Технический долг", "Масштабирование"],
+    exp: [
+      {
+        yr: "2018 — сейчас",
+        rw: "Staff Engineer, highload",
+        ds: "Системы с нагрузкой 100k rps",
+      },
+      { yr: "2011 — 2018", rw: "Backend Developer", ds: "Финтех и телеком" },
+    ],
+    formats: [
+      {
+        fn: "Разбор материалов",
+        fd: "письменный отчёт за 3 дня",
+        fp: "4 000 ₽",
+      },
+      { fn: "Видеозвонок", fd: "60 минут", fp: "3 800 ₽" },
+    ],
+    contact: "@daniil_arch · daniil@profifinder.demo",
+  },
+  {
+    id: 4,
+    initials: "ОН",
+    color: "#0D233B",
+    name: "Ольга Нестерова",
+    role: "Карьерный консультант · Казань",
+    rating: "5.0",
+    reviews: "113",
+    topics: ["Карьера"],
+    format: "Серия",
+    fmtLabel: "Серия встреч",
+    price: "7 500",
+    per: "программа",
+    short:
+      "Не знаете, куда двигаться? Пройдём профориентацию и соберём план смены сферы.",
+    tags: ["Выбор профессии", "Смена сферы"],
+    bio: "Сертифицированный карьерный консультант, 9 лет практики. Специализация — смена профессии.",
+    comp: [
+      "Профориентация и выбор профессии",
+      "Смена сферы деятельности",
+      "Работа с выгоранием",
+    ],
+    topicsFull: ["Выбор профессии", "Карьерная стратегия", "Смена сферы"],
+    exp: [
+      {
+        yr: "2017 — сейчас",
+        rw: "Частная практика",
+        ds: "400+ проведённых консультаций",
+      },
+      {
+        yr: "2013 — 2017",
+        rw: "HR-бизнес-партнёр",
+        ds: "Развитие и оценка персонала",
+      },
+    ],
+    formats: [
+      {
+        fn: "Серия из 4 встреч",
+        fd: "полная программа профориентации",
+        fp: "7 500 ₽",
+      },
+      { fn: "Разовая встреча", fd: "60 минут", fp: "2 500 ₽" },
+    ],
+    contact: "@olga_career · olga@profifinder.demo",
+  },
+  {
+    id: 5,
+    initials: "ИЛ",
+    color: "#2563EB",
+    name: "Ирина Лаптева",
+    role: "Product Designer · Москва",
+    rating: "4.9",
+    reviews: "71",
+    topics: ["Дизайн", "Продукт"],
+    format: "Видеозвонок",
+    fmtLabel: "Видеозвонок · 45 мин",
+    price: "3 200",
+    per: "консультация",
+    short:
+      "Разберём портфолио, кейсы или конкретную задачу по UX — с фокусом на трудоустройство.",
+    tags: ["UX-ревью", "Портфолио"],
+    bio: "10 лет в продуктовом дизайне. Ведёт менторскую программу для джуниор-дизайнеров.",
+    comp: [
+      "Ревью портфолио и кейсов",
+      "UX-аудит интерфейса",
+      "Подготовка к дизайн-собеседованиям",
+    ],
+    topicsFull: ["Портфолио-ревью", "UX-дизайн", "Дизайн-собеседования"],
+    exp: [
+      {
+        yr: "2019 — сейчас",
+        rw: "Senior Product Designer",
+        ds: "Дизайн-система и ключевые флоу",
+      },
+      {
+        yr: "2014 — 2019",
+        rw: "UI/UX Designer",
+        ds: "Агентство и продуктовые команды",
+      },
+    ],
+    formats: [
+      { fn: "Видеозвонок", fd: "45 минут · разбор портфолио", fp: "3 200 ₽" },
+      { fn: "Разбор материалов", fd: "письменные комментарии", fp: "2 400 ₽" },
+    ],
+    contact: "@irina_ux · irina@profifinder.demo",
+  },
+  {
+    id: 6,
+    initials: "ПГ",
+    color: "#1D4ED8",
+    name: "Павел Громов",
+    role: "Основатель · Москва",
+    rating: "4.9",
+    reviews: "48",
+    topics: ["Стартапы", "Продукт"],
+    format: "Видеозвонок",
+    fmtLabel: "Стратегическая сессия",
+    price: "6 000",
+    per: "сессия",
+    short:
+      "Разберём проблему на проекте, юнит-экономику или подготовку к раунду инвестиций.",
+    tags: ["Стартапы", "Инвестиции"],
+    bio: "Основатель двух стартапов, один с успешным экзитом. Ангел-инвестор и трекер акселератора.",
+    comp: [
+      "Разбор проблемы на проекте",
+      "Юнит-экономика и метрики",
+      "Привлечение инвестиций",
+    ],
+    topicsFull: [
+      "Запуск стартапа",
+      "Привлечение инвестиций",
+      "Продуктовые метрики",
+    ],
+    exp: [
+      {
+        yr: "2021 — сейчас",
+        rw: "Founder & CEO",
+        ds: "B2B SaaS, команда 20+ человек",
+      },
+      {
+        yr: "2016 — 2020",
+        rw: "Co-founder (exit)",
+        ds: "Маркетплейс, продан стратегу",
+      },
+    ],
+    formats: [
+      {
+        fn: "Стратегическая сессия",
+        fd: "90 минут · глубокий разбор",
+        fp: "6 000 ₽",
+      },
+      { fn: "Видеозвонок", fd: "45 минут", fp: "3 500 ₽" },
+    ],
+    contact: "@pavel_founder · pavel@profifinder.demo",
+  },
+];
+
+export const getExpert = (id) =>
+  experts.find((e) => String(e.id) === String(id));
+</file>
+
+<file path="app.json">
+{
+  "expo": {
+    "name": "ProfiFinder",
+    "slug": "profifinder",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "profifinder",
+    "userInterfaceStyle": "automatic",
+    "android": {
+      "package": "com.profifinder.app"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "278333aa-846c-4cb1-968b-0807ae1db3d8"
+      }
+    }
+  }
+}
+</file>
+
+<file path="package.json">
+{
+  "name": "profifinder",
+  "main": "expo-router/entry",
+  "version": "1.0.0",
+  "dependencies": {
+    "@expo/vector-icons": "^15.0.0",
+    "expo": "~57.0.2",
+    "expo-constants": "~57.0.3",
+    "expo-linking": "~57.0.1",
+    "expo-router": "~57.0.3",
+    "nativewind": "^4.1.23",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.0",
+    "react-native-gesture-handler": "~2.32.0",
+    "react-native-reanimated": "4.5.0",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "4.25.2",
+    "react-native-web": "~0.21.0",
+    "react-native-worklets": "0.10.0"
+  },
+  "devDependencies": {
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "tailwindcss": "^3.4.17"
+  },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "web": "expo start --web"
+  },
+  "private": true
+}
+</file>
+
+<file path="src/app/_layout.jsx">
+import "@/global.css";
+
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from "expo-router";
+import { useColorScheme } from "react-native";
+
+export default function RootLayout() {
+  const scheme = useColorScheme();
+  const dark = scheme === "dark";
+
+  return (
+    <ThemeProvider value={dark ? DarkTheme : DefaultTheme}>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen
+          name="expert/[id]"
+          options={{
+            headerShown: true,
+            headerTitle: "Профиль эксперта",
+            headerBackTitle: "Назад",
+            headerTintColor: dark ? "#FFFFFF" : "#0D233B",
+            headerStyle: { backgroundColor: dark ? "#1b2226" : "#FFFFFF" },
+          }}
+        />
+      </Stack>
+    </ThemeProvider>
+  );
+}
+</file>
+
+<file path="src/app/(tabs)/catalog.jsx">
+import { useMemo, useState, useEffect } from "react";
+import { View, Text, ScrollView, FlatList } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useLocalSearchParams, useRouter } from "expo-router";
+
+import { Chip } from "@/components/Chip";
+import { ExpertCard } from "@/components/ExpertCard";
+import { experts, topicFilters, formatFilters } from "@/data/catalog";
+
+const plural = (n) => {
+  const m = n % 10, d = n % 100;
+  if (m === 1 && d !== 11) return "специалист";
+  if (m >= 2 && m <= 4 && (d < 10 || d >= 20)) return "специалиста";
+  return "специалистов";
+};
+
+export default function CatalogScreen() {
+  const insets = useSafeAreaInsets();
+  const router = useRouter();
+  const params = useLocalSearchParams();
+
+  const [topic, setTopic] = useState("all");
+  const [format, setFormat] = useState("all");
+  const [q, setQ] = useState("");
+
+  useEffect(() => {
+    if (params.topic) setTopic(params.topic);
+    if (params.q !== undefined) setQ(params.q);
+  }, [params.topic, params.q]);
+
+  const list = useMemo(() => {
+    const query = (q || "").trim().toLowerCase();
+    return experts.filter((e) => {
+      const byTopic = topic === "all" || e.topics.includes(topic);
+      const byFormat = format === "all" || e.format === format;
+      const byQuery =
+        !query ||
+        [e.name, e.role, e.short, ...e.tags, ...e.topicsFull].join(" ").toLowerCase().includes(query);
+      return byTopic && byFormat && byQuery;
+    });
+  }, [topic, format, q]);
+
+  return (
+    <View className="flex-1 bg-[#F5F8FC] dark:bg-[#1b2226]" style={{ paddingTop: insets.top + 8 }}>
+      <FlatList
+        data={list}
+        keyExtractor={(e) => String(e.id)}
+        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: insets.bottom + 24 }}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <View>
+            <View className="mb-1 flex-row items-center gap-2">
+              <View className="h-[14px] w-[14px] rounded-full border-2 border-[#2563EB]" />
+              <Text className="text-[13px] font-semibold tracking-[1.5px] text-[#2563EB]">КАТАЛОГ</Text>
+            </View>
+            <Text className="text-[28px] font-bold text-[#0D233B] dark:text-white">Кто готов помочь сейчас</Text>
+
+            <Text className="mb-2 mt-4 text-[12px] uppercase tracking-[1px] text-[#64748B] dark:text-gray-400">Тема</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} className="-mx-1 px-1">
+              {topicFilters.map((t) => (
+                <Chip key={t.val} label={t.label} active={topic === t.val} onPress={() => setTopic(t.val)} />
+              ))}
+            </ScrollView>
+
+            <Text className="mb-2 mt-4 text-[12px] uppercase tracking-[1px] text-[#64748B] dark:text-gray-400">Формат</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} className="-mx-1 px-1">
+              {formatFilters.map((f) => (
+                <Chip key={f.val} label={f.label} active={format === f.val} onPress={() => setFormat(f.val)} />
+              ))}
+            </ScrollView>
+
+            <Text className="mb-4 mt-5 text-[13px] text-[#64748B] dark:text-gray-400">
+              Найдено: {list.length} {plural(list.length)}
+            </Text>
+          </View>
+        }
+        renderItem={({ item }) => (
+          <ExpertCard expert={item} onPress={() => router.push(`/expert/${item.id}`)} />
+        )}
+        ListEmptyComponent={
+          <View className="mt-4 items-center rounded-2xl border border-dashed border-gray-300 bg-white p-8 dark:border-[#3a444a] dark:bg-[#2c353a]">
+            <Text className="mb-1 font-bold text-[#0D233B] dark:text-white">Ничего не нашлось</Text>
+            <Text className="text-center text-[14px] text-[#64748B] dark:text-gray-400">
+              Снимите один из фильтров, чтобы расширить поиск.
+            </Text>
+          </View>
+        }
+      />
+    </View>
+  );
+}
+</file>
+
+<file path="src/app/(tabs)/index.jsx">
+import { useState } from "react";
+import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
+import { Feather } from "@expo/vector-icons";
+
+import { Wordmark } from "@/components/Logo";
+import { categories, quickTags } from "@/data/catalog";
+
+export default function SearchScreen() {
+  const insets = useSafeAreaInsets();
+  const router = useRouter();
+  const [query, setQuery] = useState("");
+
+  const goCatalog = (params) => router.push({ pathname: "/catalog", params: params || {} });
+
+  return (
+    <ScrollView
+      className="flex-1 bg-[#F5F8FC] dark:bg-[#1b2226]"
+      contentContainerStyle={{ paddingTop: insets.top + 12, paddingBottom: 32 }}
+      showsVerticalScrollIndicator={false}
+    >
+      <View className="px-5">
+        <Wordmark size={20} />
+
+        <View className="mt-6 flex-row items-center gap-2 self-start rounded-full bg-[#E8F0FE] px-4 py-2 dark:bg-[#2c353a]">
+          <View className="h-[6px] w-[6px] rounded-full bg-[#2563EB]" />
+          <Text className="text-[13px] font-medium text-[#2563EB]">240+ экспертов на связи</Text>
+        </View>
+
+        <Text className="mt-4 text-[34px] font-extrabold leading-[40px] text-[#0D233B] dark:text-white">
+          Найдём <Text className="text-[#2563EB]">специалиста</Text> для любой задачи
+        </Text>
+        <Text className="mt-3 text-[15px] leading-[22px] text-[#64748B] dark:text-gray-400">
+          Опишите вопрос — от выбора профессии до разбора кейса на проекте — и мы подберём эксперта,
+          который уже решал такое.
+        </Text>
+
+        <View
+          style={{ elevation: 3 }}
+          className="mt-5 flex-row items-center rounded-2xl bg-white py-[6px] pl-4 pr-[6px] dark:bg-[#2c353a]"
+        >
+          <Feather name="search" size={18} color="#94A3B8" />
+          <TextInput
+            value={query}
+            onChangeText={setQuery}
+            placeholder="Например: переход в продакт"
+            placeholderTextColor="#94A3B8"
+            returnKeyType="search"
+            onSubmitEditing={() => goCatalog({ q: query })}
+            className="ml-2 flex-1 text-[14px] text-[#0D233B] dark:text-white"
+          />
+          <Pressable onPress={() => goCatalog({ q: query })} className="rounded-xl bg-[#2563EB] px-5 py-[10px] active:opacity-90">
+            <Text className="text-[14px] font-semibold text-white">Найти</Text>
+          </Pressable>
+        </View>
+
+        <View className="mt-4 flex-row flex-wrap items-center gap-2">
+          <Text className="text-[14px] text-[#64748B] dark:text-gray-400">Часто ищут:</Text>
+          {quickTags.map((t) => (
+            <Pressable
+              key={t.label}
+              onPress={() => goCatalog({ topic: t.topic })}
+              className="rounded-full border border-gray-200 bg-white px-[13px] py-[6px] active:opacity-80 dark:border-[#3a444a] dark:bg-[#2c353a]"
+            >
+              <Text className="text-[13px] text-[#0D233B] dark:text-gray-200">{t.label}</Text>
+            </Pressable>
+          ))}
+        </View>
+
+        <View className="mt-7 flex-row items-center">
+          {[
+            ["240+", "специалистов"],
+            ["18", "направлений"],
+            ["4.9", "средняя оценка"],
+          ].map(([n, l], i) => (
+            <View key={l} className="flex-row items-center">
+              {i > 0 && <View className="mx-4 h-[34px] w-[1px] bg-gray-200 dark:bg-[#3a444a]" />}
+              <View>
+                <Text className="text-[22px] font-bold text-[#0D233B] dark:text-white">{n}</Text>
+                <Text className="text-[12px] text-[#64748B] dark:text-gray-400">{l}</Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      </View>
+
+      <View className="mt-9 px-5">
+        <View className="flex-row items-center gap-2">
+          <View className="h-[14px] w-[14px] rounded-full border-2 border-[#2563EB]" />
+          <Text className="text-[13px] font-semibold tracking-[1.5px] text-[#2563EB]">НАПРАВЛЕНИЯ</Text>
+        </View>
+        <Text className="mt-2 text-[24px] font-bold text-[#0D233B] dark:text-white">Выберите область — найдём лучших</Text>
+
+        <View className="mt-4 flex-row flex-wrap justify-between">
+          {categories.map((c) => (
+            <Pressable
+              key={c.topic}
+              onPress={() => goCatalog({ topic: c.topic })}
+              style={{ width: "48.5%", elevation: 1 }}
+              className="mb-3 rounded-2xl border border-gray-100 bg-white p-4 active:opacity-90 dark:border-[#3a444a] dark:bg-[#2c353a]"
+            >
+              <View className="h-[46px] w-[46px] items-center justify-center rounded-[14px] bg-[#E8F0FE] dark:bg-[#0D233B]">
+                <Feather name={c.icon} size={22} color="#2563EB" />
+              </View>
+              <Text className="mt-3 text-[15px] font-semibold text-[#0D233B] dark:text-white">{c.nm}</Text>
+              <Text className="mt-[2px] text-[12px] text-[#64748B] dark:text-gray-400">{c.count}</Text>
+            </Pressable>
+          ))}
+        </View>
+      </View>
+    </ScrollView>
+  );
+}
+</file>
+
+</files>

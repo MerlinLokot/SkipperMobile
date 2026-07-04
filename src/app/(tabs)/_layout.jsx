@@ -1,22 +1,21 @@
 import { Tabs } from "expo-router";
 import { Feather } from "@expo/vector-icons";
-import { useColorScheme } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TabsLayout() {
-  const scheme = useColorScheme();
-  const dark = scheme === "dark";
+  const insets = useSafeAreaInsets();
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: "#2563EB",
-        tabBarInactiveTintColor: dark ? "#7A8699" : "#94A3B8",
+        tabBarInactiveTintColor: "#94A3B8",
         tabBarStyle: {
-          backgroundColor: dark ? "#1b2226" : "#FFFFFF",
-          borderTopColor: dark ? "#3a444a" : "#EAEEF5",
-          height: 64,
-          paddingBottom: 10,
+          backgroundColor: "#FFFFFF",
+          borderTopColor: "#EAEEF5",
+          height: 60 + insets.bottom,
+          paddingBottom: insets.bottom + 8,
           paddingTop: 8,
         },
         tabBarLabelStyle: { fontSize: 12, fontWeight: "600" },
@@ -25,8 +24,8 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Поиск",
-          tabBarIcon: ({ color, size }) => <Feather name="search" size={size} color={color} />,
+          title: "Главная",
+          tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
         }}
       />
       <Tabs.Screen
@@ -34,13 +33,6 @@ export default function TabsLayout() {
         options={{
           title: "Каталог",
           tabBarIcon: ({ color, size }) => <Feather name="grid" size={size} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="become"
-        options={{
-          title: "Стать экспертом",
-          tabBarIcon: ({ color, size }) => <Feather name="user-plus" size={size} color={color} />,
         }}
       />
     </Tabs>

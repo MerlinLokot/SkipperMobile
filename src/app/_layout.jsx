@@ -1,24 +1,21 @@
 import "@/global.css";
 
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from "expo-router";
-import { useColorScheme } from "react-native";
+import { DefaultTheme, Stack, ThemeProvider } from "expo-router";
 
 export default function RootLayout() {
-  const scheme = useColorScheme();
-  const dark = scheme === "dark";
-
   return (
-    <ThemeProvider value={dark ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen
-          name="expert/[id]"
+          name="specialist/[id]"
           options={{
             headerShown: true,
-            headerTitle: "Профиль эксперта",
+            headerTitle: "Профиль",
             headerBackTitle: "Назад",
-            headerTintColor: dark ? "#FFFFFF" : "#0D233B",
-            headerStyle: { backgroundColor: dark ? "#1b2226" : "#FFFFFF" },
+            headerTintColor: "#0D233B",
+            headerStyle: { backgroundColor: "#F5F8FC" },
+            headerShadowVisible: false,
           }}
         />
       </Stack>

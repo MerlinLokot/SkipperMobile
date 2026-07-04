@@ -6,17 +6,32 @@
     "orientation": "portrait",
     "scheme": "profifinder",
     "userInterfaceStyle": "automatic",
+    "icon": "./assets/icon.png",
     "android": {
-      "package": "com.profifinder.app"
+      "package": "com.profifinder.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0D233B"
+      }
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0D233B",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 180,
+          "resizeMode": "contain"
+        }
+      ]
     ],
     "extra": {
       "router": {},
       "eas": {
         "projectId": "278333aa-846c-4cb1-968b-0807ae1db3d8"
-      }
+      },
+      "apiUrl": ""
     }
   }
 }

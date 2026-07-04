@@ -1,7 +1,6 @@
 import { View, Text } from "react-native";
 
-// Лого-лупа из View (круг + повёрнутая «ручка»), без SVG.
-export function LensMark({ size = 30, ring = "#0D233B" }) {
+export function LensMark({ size = 26, ring = "#0D233B" }) {
   const s = size;
   return (
     <View style={{ width: s, height: s }}>
@@ -33,12 +32,12 @@ export function LensMark({ size = 30, ring = "#0D233B" }) {
   );
 }
 
-export function Wordmark({ size = 22, dark = false }) {
+export function Wordmark({ size = 20 }) {
   return (
-    <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-      <LensMark size={size + 8} ring={dark ? "#FFFFFF" : "#0D233B"} />
+    <View style={{ flexDirection: "row", alignItems: "center", gap: 9 }}>
+      <LensMark size={size + 6} />
       <Text style={{ fontSize: size, fontWeight: "800", letterSpacing: -0.5 }}>
-        <Text style={{ color: dark ? "#FFFFFF" : "#0D233B" }}>Profi</Text>
+        <Text style={{ color: "#0D233B" }}>Profi</Text>
         <Text style={{ color: "#2563EB" }}>Finder</Text>
       </Text>
     </View>
