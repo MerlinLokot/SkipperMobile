@@ -1,0 +1,13 @@
+import "@/global.css";
+
+import { DefaultTheme, Stack, ThemeProvider } from "expo-router";
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider value={DefaultTheme}>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" />
+      </Stack>
+    </ThemeProvider>
+  );
+}
