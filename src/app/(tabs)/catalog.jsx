@@ -1,113 +1,83 @@
-import { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { useMemo, useState, useEffect } from "react";
+import { View, Text, ScrollView, FlatList } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
-const CARDS = [
-  {
-    initials: "МК", color: "#2563EB", name: "Марина Ковалёва",
-    role: "Продукт-менеджер · Москва", rating: "4.9", reviews: "87",
-    tags: ["Продукт-менеджмент", "Карьерный трек"],
-    short: "Помогу перейти в продакт-менеджмент и собрать карьерный трек.",
-    fmtLabel: "Видеозвонок · 60 мин", price: "3 500",
-  },
-  {
-    initials: "АС", color: "#0D233B", name: "Артём Соколов",
-    role: "Head of HR · Санкт-Петербург", rating: "5.0", reviews: "64",
-    tags: ["Подбор персонала", "Собеседования"],
-    short: "Разберём вакансию, воронку найма или подготовку к собеседованию.",
-    fmtLabel: "Переписка + звонок", price: "2 800",
-  },
-  {
-    initials: "ДВ", color: "#3B82F6", name: "Даниил Верещагин",
-    role: "Staff Engineer · удалённо", rating: "4.8", reviews: "52",
-    tags: ["Архитектура", "Code review"],
-    short: "Пришлите архитектуру или код — вернусь с письменным разбором.",
-    fmtLabel: "Разбор материалов", price: "4 000",
-  },
-];
+import { Chip } from "@/components/Chip";
+import { ExpertCard } from "@/components/ExpertCard";
+import { experts, topicFilters, formatFilters } from "@/data/catalog";
 
-const TOPICS = ["Все", "Карьера", "Продукт", "Разработка", "Дизайн", "Найм и HR"];
-const FORMATS = ["Любой", "Видеозвонок", "Переписка", "Разбор материалов"];
-
-function Chip({ label, active }) {
-  return (
-    <View
-      className={`mr-2 rounded-full border px-[15px] py-[8px] ${
-        active ? "border-[#0D233B] bg-[#0D233B]" : "border-gray-200 bg-white"
-      }`}
-    >
-      <Text className={`text-[14px] font-medium ${active ? "text-white" : "text-[#0D233B]"}`}>{label}</Text>
-    </View>
-  );
-}
+const plural = (n) => {
+  const m = n % 10, d = n % 100;
+  if (m === 1 && d !== 11) return "специалист";
+  if (m >= 2 && m <= 4 && (d < 10 || d >= 20)) return "специалиста";
+  return "специалистов";
+};
 
 export default function CatalogScreen() {
   const insets = useSafeAreaInsets();
-  const [topic, setTopic] = useState("Все");
+  const router = useRouter();
+  const params = useLocalSearchParams();
+
+  const [topic, setTopic] = useState("all");
+  const [format, setFormat] = useState("all");
+  const [q, setQ] = useState("");
+
+  useEffect(() => {
+    if (params.topic) setTopic(params.topic);
+    if (params.q !== undefined) setQ(params.q);
+  }, [params.topic, params.q]);
+
+  const list = useMemo(() => {
+    const query = (q || "").trim().toLowerCase();
+    return experts.filter((e) => {
+      const byTopic = topic === "all" || e.topics.includes(topic);
+      const byFormat = format === "all" || e.format === format;
+      const byQuery =
+        !query ||
+        [e.name, e.role, e.short, ...e.tags, ...e.topicsFull].join(" ").toLowerCase().includes(query);
+      return byTopic && byFormat && byQuery;
+    });
+  }, [topic, format, q]);
 
   return (
-    <ScrollView
-      className="flex-1 bg-[#F5F8FC]"
-      contentContainerStyle={{ paddingTop: insets.top + 8, paddingHorizontal: 20, paddingBottom: 24 }}
-      showsVerticalScrollIndicator={false}
-    >
-      <View className="mb-1 flex-row items-center gap-2">
-        <View className="h-[14px] w-[14px] rounded-full border-2 border-[#2563EB]" />
-        <Text className="text-[13px] font-semibold tracking-[1.5px] text-[#2563EB]">КАТАЛОГ</Text>
-      </View>
-      <Text className="text-[28px] font-bold text-[#0D233B]">Кто готов помочь сейчас</Text>
-
-      <Text className="mb-2 mt-4 text-[12px] uppercase tracking-[1px] text-[#64748B]">Тема</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} className="-mx-1 px-1">
-        {TOPICS.map((t) => <Chip key={t} label={t} active={topic === t} />)}
-      </ScrollView>
-
-      <Text className="mb-2 mt-4 text-[12px] uppercase tracking-[1px] text-[#64748B]">Формат</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} className="-mx-1 px-1">
-        {FORMATS.map((f) => <Chip key={f} label={f} active={f === "Любой"} />)}
-      </ScrollView>
-
-      <Text className="mb-4 mt-5 text-[13px] text-[#64748B]">Найдено: {CARDS.length} специалиста</Text>
-
-      {CARDS.map((e) => (
-        <View key={e.name} className="mb-[16px] rounded-[18px] border border-gray-100 bg-white p-[18px]">
-          <View className="flex-row items-start gap-3">
-            <View style={{ backgroundColor: e.color }} className="h-[52px] w-[52px] items-center justify-center rounded-full">
-              <Text className="text-[18px] font-bold text-white">{e.initials}</Text>
+    <View className="flex-1 bg-[#F5F8FC]" style={{ paddingTop: insets.top + 8 }}>
+      <FlatList
+        data={list}
+        keyExtractor={(e) => String(e.id)}
+        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: insets.bottom + 24 }}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <View>
+            <View className="mb-1 flex-row items-center gap-2">
+              <View className="h-[14px] w-[14px] rounded-full border-2 border-[#2563EB]" />
+              <Text className="text-[13px] font-semibold tracking-[1.5px] text-[#2563EB]">КАТАЛОГ</Text>
             </View>
-            <View className="flex-1">
-              <Text className="text-[16px] font-bold text-[#0D233B]">{e.name}</Text>
-              <Text className="mt-[2px] text-[13px] text-[#64748B]">{e.role}</Text>
-              <View className="mt-[6px] flex-row items-center gap-[4px]">
-                <Ionicons name="star" size={13} color="#F59E0B" />
-                <Text className="text-[13px] font-semibold text-[#0D233B]">{e.rating}</Text>
-                <Text className="text-[13px] text-[#64748B]">· {e.reviews} отзывов</Text>
-              </View>
-            </View>
+            <Text className="text-[28px] font-bold text-[#0D233B]">Кто готов помочь сейчас</Text>
+
+            <Text className="mb-2 mt-4 text-[12px] uppercase tracking-[1px] text-[#64748B]">Тема</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} className="-mx-1 px-1">
+              {topicFilters.map((t) => (
+                <Chip key={t.val} label={t.label} active={topic === t.val} onPress={() => setTopic(t.val)} />
+              ))}
+            </ScrollView>
+
+            <Text className="mb-2 mt-4 text-[12px] uppercase tracking-[1px] text-[#64748B]">Формат</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} className="-mx-1 px-1">
+              {formatFilters.map((f) => (
+                <Chip key={f.val} label={f.label} active={format === f.val} onPress={() => setFormat(f.val)} />
+              ))}
+            </ScrollView>
+
+            <Text className="mb-4 mt-5 text-[13px] text-[#64748B]">
+              Найдено: {list.length} {plural(list.length)}
+            </Text>
           </View>
-
-          <View className="my-[14px] h-[1px] bg-gray-100" />
-
-          <View className="mb-[12px] flex-row flex-wrap gap-[7px]">
-            {e.tags.map((t) => (
-              <View key={t} className="rounded-full bg-[#E8F0FE] px-[11px] py-[5px]">
-                <Text className="text-[12px] font-medium text-[#1D4ED8]">{t}</Text>
-              </View>
-            ))}
-          </View>
-
-          <Text className="mb-[14px] text-[14px] leading-[20px] text-[#64748B]">{e.short}</Text>
-
-          <View className="flex-row items-center justify-between border-t border-gray-100 pt-[14px]">
-            <View className="flex-1 flex-row items-center gap-[6px] pr-2">
-              <Feather name="video" size={14} color="#2563EB" />
-              <Text className="text-[13px] text-[#64748B]" numberOfLines={1}>{e.fmtLabel}</Text>
-            </View>
-            <Text className="text-[16px] font-bold text-[#0D233B]">{e.price} ₽</Text>
-          </View>
-        </View>
-      ))}
-    </ScrollView>
+        }
+        renderItem={({ item }) => (
+          <ExpertCard expert={item} onPress={() => router.push(`/expert/${item.id}`)} />
+        )}
+      />
+    </View>
   );
 }

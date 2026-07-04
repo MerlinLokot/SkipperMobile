@@ -1,5 +1,6 @@
 import { View, Text } from "react-native";
 
+// Лого-лупа из View (круг + повёрнутая «ручка»), без SVG.
 export function LensMark({ size = 30, ring = "#0D233B" }) {
   const s = size;
   return (

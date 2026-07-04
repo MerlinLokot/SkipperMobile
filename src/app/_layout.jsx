@@ -7,6 +7,15 @@ export default function RootLayout() {
     <ThemeProvider value={DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen
+          name="expert/[id]"
+          options={{
+            headerShown: true,
+            headerTitle: "Профиль эксперта",
+            headerBackTitle: "Назад",
+            headerTintColor: "#0D233B",
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );

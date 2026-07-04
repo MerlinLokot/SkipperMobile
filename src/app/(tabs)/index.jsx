@@ -1,22 +1,18 @@
+import { useState } from "react";
 import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 
 import { Wordmark } from "@/components/Logo";
-
-const CATS = [
-  { nm: "Карьера", icon: "compass" },
-  { nm: "Продукт", icon: "layers" },
-  { nm: "Разработка", icon: "code" },
-  { nm: "Дизайн", icon: "pen-tool" },
-  { nm: "Найм и HR", icon: "users" },
-  { nm: "Стартапы", icon: "trending-up" },
-];
-
-const QUICK = ["Выбор профессии", "Подбор персонала", "Разбор проекта"];
+import { categories, quickTags } from "@/data/catalog";
 
 export default function SearchScreen() {
   const insets = useSafeAreaInsets();
+  const router = useRouter();
+  const [query, setQuery] = useState("");
+
+  const goCatalog = (params) => router.push({ pathname: "/catalog", params: params || {} });
 
   return (
     <ScrollView
@@ -29,42 +25,43 @@ export default function SearchScreen() {
 
         <View className="mt-6 flex-row items-center gap-2 self-start rounded-full bg-[#E8F0FE] px-4 py-2">
           <View className="h-[6px] w-[6px] rounded-full bg-[#2563EB]" />
-          <Text className="text-[13px] font-medium text-[#2563EB]">
-            240+ экспертов на связи
-          </Text>
+          <Text className="text-[13px] font-medium text-[#2563EB]">240+ экспертов на связи</Text>
         </View>
 
         <Text className="mt-4 text-[34px] font-extrabold leading-[40px] text-[#0D233B]">
-          Найдём <Text className="text-[#2563EB]">специалиста</Text> для любой
-          задачи
+          Найдём <Text className="text-[#2563EB]">специалиста</Text> для любой задачи
         </Text>
         <Text className="mt-3 text-[15px] leading-[22px] text-[#64748B]">
-          Опишите вопрос — от выбора профессии до разбора кейса на проекте — и
-          мы подберём эксперта, который уже решал такое.
+          Опишите вопрос — от выбора профессии до разбора кейса на проекте — и мы подберём эксперта,
+          который уже решал такое.
         </Text>
 
-        {}
         <View className="mt-5 flex-row items-center rounded-2xl bg-white py-[6px] pl-4 pr-[6px]">
           <Feather name="search" size={18} color="#94A3B8" />
           <TextInput
+            value={query}
+            onChangeText={setQuery}
             placeholder="Например: переход в продакт"
             placeholderTextColor="#94A3B8"
+            returnKeyType="search"
+            onSubmitEditing={() => goCatalog({ q: query })}
             className="ml-2 flex-1 text-[14px] text-[#0D233B]"
           />
-          <Pressable className="rounded-xl bg-[#2563EB] px-5 py-[10px]">
+          <Pressable onPress={() => goCatalog({ q: query })} className="rounded-xl bg-[#2563EB] px-5 py-[10px] active:opacity-90">
             <Text className="text-[14px] font-semibold text-white">Найти</Text>
           </Pressable>
         </View>
 
         <View className="mt-4 flex-row flex-wrap items-center gap-2">
           <Text className="text-[14px] text-[#64748B]">Часто ищут:</Text>
-          {QUICK.map((t) => (
-            <View
-              key={t}
-              className="rounded-full border border-gray-200 bg-white px-[13px] py-[6px]"
+          {quickTags.map((t) => (
+            <Pressable
+              key={t.label}
+              onPress={() => goCatalog({ topic: t.topic })}
+              className="rounded-full border border-gray-200 bg-white px-[13px] py-[6px] active:opacity-80"
             >
-              <Text className="text-[13px] text-[#0D233B]">{t}</Text>
-            </View>
+              <Text className="text-[13px] text-[#0D233B]">{t.label}</Text>
+            </Pressable>
           ))}
         </View>
 
@@ -77,9 +74,7 @@ export default function SearchScreen() {
             <View key={l} className="flex-row items-center">
               {i > 0 && <View className="mx-4 h-[34px] w-[1px] bg-gray-200" />}
               <View>
-                <Text className="text-[22px] font-bold text-[#0D233B]">
-                  {n}
-                </Text>
+                <Text className="text-[22px] font-bold text-[#0D233B]">{n}</Text>
                 <Text className="text-[12px] text-[#64748B]">{l}</Text>
               </View>
             </View>
@@ -90,31 +85,24 @@ export default function SearchScreen() {
       <View className="mt-9 px-5">
         <View className="flex-row items-center gap-2">
           <View className="h-[14px] w-[14px] rounded-full border-2 border-[#2563EB]" />
-          <Text className="text-[13px] font-semibold tracking-[1.5px] text-[#2563EB]">
-            НАПРАВЛЕНИЯ
-          </Text>
+          <Text className="text-[13px] font-semibold tracking-[1.5px] text-[#2563EB]">НАПРАВЛЕНИЯ</Text>
         </View>
-        <Text className="mt-2 text-[24px] font-bold text-[#0D233B]">
-          Выберите область — найдём лучших
-        </Text>
+        <Text className="mt-2 text-[24px] font-bold text-[#0D233B]">Выберите область — найдём лучших</Text>
 
         <View className="mt-4 flex-row flex-wrap justify-between">
-          {CATS.map((c) => (
-            <View
-              key={c.nm}
+          {categories.map((c) => (
+            <Pressable
+              key={c.topic}
+              onPress={() => goCatalog({ topic: c.topic })}
               style={{ width: "48.5%" }}
-              className="mb-3 rounded-2xl border border-gray-100 bg-white p-4"
+              className="mb-3 rounded-2xl border border-gray-100 bg-white p-4 active:opacity-90"
             >
               <View className="h-[46px] w-[46px] items-center justify-center rounded-[14px] bg-[#E8F0FE]">
                 <Feather name={c.icon} size={22} color="#2563EB" />
               </View>
-              <Text className="mt-3 text-[15px] font-semibold text-[#0D233B]">
-                {c.nm}
-              </Text>
-              <Text className="mt-[2px] text-[12px] text-[#64748B]">
-                эксперты
-              </Text>
-            </View>
+              <Text className="mt-3 text-[15px] font-semibold text-[#0D233B]">{c.nm}</Text>
+              <Text className="mt-[2px] text-[12px] text-[#64748B]">{c.count}</Text>
+            </Pressable>
           ))}
         </View>
       </View>
